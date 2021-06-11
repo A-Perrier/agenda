@@ -1,0 +1,61 @@
+@import '../styles/tools/typography.scss';
+
+.calendar {
+    width: 90%;
+    margin: 2rem auto;
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .month-navigation {
+        margin-right: 5%;
+        svg:first-of-type { margin-right: 1rem; }
+    }
+
+    .month {
+        h1 { 
+            margin-bottom: 2rem;
+         }
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .week {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .day {
+        position: relative;
+        width: 7.14%;
+        margin: 0 3.57%;
+        text-align: center;
+        padding: 1rem 0;
+        cursor: pointer;
+
+        &__prev-month, &__next-month { color: $disable-color; }
+        
+
+        &:hover {
+
+            color: white;
+
+            &::after { 
+                position: absolute;
+                content: " ";
+                height: 2rem;
+                width: 2rem;
+                background-color: $cta-color;
+                bottom: 50%;
+                z-index: -1;
+                left: 50%;
+                transform: translate(-50%, 50%);
+                border-radius: 8px;
+             } 
+        }
+    }
+}

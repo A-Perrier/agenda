@@ -1,5 +1,6 @@
 import React, { createRef, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { rightIcon, leftIcon } from '../shared/svg'
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './Agenda.scss';
@@ -8,17 +9,25 @@ import './Agenda.scss';
 import '../bootstrap';
 
 
-const Agenda = () => {
 
+const Agenda = () => {
 
   return (
   <>
-    <h1>Agenda</h1>
-
     <div className="calendar">
       <div className="month">
+        
+        <header>
+          <h1>Juin 2021</h1>
+          <div className="month-navigation">
+            { leftIcon() }
+            { rightIcon() }
+          </div>
+        </header>
+
+
         <div className="week">
-          <div className="day__prev-month">31</div>
+          <div className="day day__prev-month">31</div>
           <div className="day">1</div>
           <div className="day">2</div>
           <div className="day">3</div>
@@ -57,19 +66,19 @@ const Agenda = () => {
           <div className="day">28</div>
           <div className="day">29</div>
           <div className="day">30</div>
-          <div className="day__next-month">1</div>
-          <div className="day__next-month">2</div>
-          <div className="day__next-month">3</div>
-          <div className="day__next-month">4</div>
+          <div className="day day__next-month">1</div>
+          <div className="day day__next-month">2</div>
+          <div className="day day__next-month">3</div>
+          <div className="day day__next-month">4</div>
         </div>
         <div className="week">
-          <div className="day__next-month">5</div>
-          <div className="day__next-month">6</div>
-          <div className="day__next-month">7</div>
-          <div className="day__next-month">8</div>
-          <div className="day__next-month">9</div>
-          <div className="day__next-month">10</div>
-          <div className="day__next-month">11</div>
+          <div className="day day__next-month">5</div>
+          <div className="day day__next-month">6</div>
+          <div className="day day__next-month">7</div>
+          <div className="day day__next-month">8</div>
+          <div className="day day__next-month">9</div>
+          <div className="day day__next-month">10</div>
+          <div className="day day__next-month">11</div>
         </div>
       </div>
     </div>
