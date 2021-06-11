@@ -1,0 +1,14 @@
+@import './tools/typography.scss';
+@import './tools/reset.scss';
+
+body {
+  background-color: $bg-color;
+}
+
+h1 { 
+  color: $primary;
+  font-size: 48px;
+}
+
+$tablet-breakpoint: 768px;
+$desktop-breakpoint: 1024px;
