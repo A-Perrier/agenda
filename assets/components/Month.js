@@ -3,10 +3,10 @@ import MonthNavigation from './MonthNavigation';
 import Weekdays from './Weekdays';
 import Weeks from './Weeks';
 import { 
-  months,
   getActualMonth,
   getActualYear,
-  formatMonth } from '../shared/utils';
+  formatMonth,
+  daysInMonth } from '../shared/utils';
 import { LeftIcon, RightIcon } from '../shared/svg';
 
 
@@ -15,7 +15,12 @@ class Month extends Component {
     monthNumber: getActualMonth(),
     monthName: getActualMonth('fullname'),
     year: getActualYear(),
+    daysInMonth: null
   };
+
+  componentDidMount () {
+    this.setState({ daysInMonth: daysInMonth(this.state.monthNumber, this.state.year) })
+  }
 
   handlePrevMonth () {
     const { monthNumber } = this.state;
@@ -28,33 +33,47 @@ class Month extends Component {
   }
 
   addMonth () {
+    const { monthNumber, year } = this.state
     this.setState({ 
-      monthNumber: this.state.monthNumber + 1, 
-      monthName: formatMonth((this.state.monthNumber + 1), 'fullname') 
+      monthNumber: monthNumber + 1, 
+      monthName: formatMonth((monthNumber + 1), 'fullname'),
+      daysInMonth: daysInMonth((monthNumber + 1), year)  
     })
   }
 
   removeMonth () {
+    const { monthNumber, year } = this.state
     this.setState({ 
-      monthNumber: this.state.monthNumber - 1, 
-      monthName: formatMonth((this.state.monthNumber - 1), 'fullname') 
+      monthNumber: monthNumber - 1, 
+      monthName: formatMonth((monthNumber - 1), 'fullname'),
+      daysInMonth: daysInMonth((monthNumber - 1), year)
     })
   }
 
   addYear () {
     const { year, monthNumber, monthName } = this.state;
-    this.setState({ year: year + 1, monthNumber: 1, monthName: formatMonth(1, 'fullname') })
+    this.setState({ 
+      year: year + 1, 
+      monthNumber: 1, 
+      monthName: formatMonth(1, 'fullname'),
+      daysInMonth: 31 // Janvier
+    })
   }
 
   removeYear () {
     const { year, monthNumber, monthName } = this.state;
-    this.setState({ year: year - 1, monthNumber: 12, monthName: formatMonth(12, 'fullname') })
+    this.setState({ 
+      year: year - 1, 
+      monthNumber: 12, 
+      monthName: formatMonth(12, 'fullname'),
+      daysInMonth: 31 // Décembre
+    })
   }
   
   
   render () {
-    const { monthName, year } = this.state
-
+    const { monthName, year, daysInMonth } = this.state
+    
     return ( 
       <div className="month">
           

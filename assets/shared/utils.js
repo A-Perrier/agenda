@@ -1,3 +1,5 @@
+import Cache from '../services/Cache';
+
 const months = {
   1: {
     digit: '01',
@@ -66,11 +68,25 @@ const months = {
  * @param {String} type 'digit' || 'abbr' || 'fullname' 
  */
 const getActualMonth = (type) => {
-  const currentMonth = (new Date()).getMonth() + 1
+  let currentMonth = Cache.get('currentMonth')
+  
+  if (currentMonth === null) {
+    currentMonth = (new Date()).getMonth() + 1;
+    Cache.set('currentMonth', currentMonth)
+  }
+
   return formatMonth(currentMonth, type)
 }
 
-const getActualYear = () => (new Date()).getFullYear()
+const getActualYear = () => {
+  let currentYear = Cache.get('currentYear')
+
+  if (currentYear === null) {
+    currentYear = (new Date()).getFullYear()
+  }
+  
+  return currentYear
+}
 
 /**
  * Format a number between 1 and 12 to return the desired equivalent
@@ -84,9 +100,19 @@ const formatMonth = (monthNumber, type = null) => {
   return type !== null ? months[+monthNumber][type] : monthNumber
 }
 
+/**
+ * Returns the number of days contained in the given month of the given year
+ * @param {Integer|String} monthNumber 
+ * @param {Integer|String} year 
+ */
+const daysInMonth = (monthNumber, year) => {
+  return (new Date(+year, +monthNumber, 0)).getDate()
+}
+
 export {
   months,
   getActualMonth,
   getActualYear,
-  formatMonth
+  formatMonth,
+  daysInMonth
 }
