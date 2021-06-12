@@ -15,12 +15,8 @@ class Month extends Component {
     monthNumber: getActualMonth(),
     monthName: getActualMonth('fullname'),
     year: getActualYear(),
-    daysInMonth: null
+    daysInMonth: daysInMonth(getActualMonth(), getActualYear())
   };
-
-  componentDidMount () {
-    this.setState({ daysInMonth: daysInMonth(this.state.monthNumber, this.state.year) })
-  }
 
   handlePrevMonth () {
     const { monthNumber } = this.state;
@@ -73,7 +69,7 @@ class Month extends Component {
   
   render () {
     const { monthName, year, daysInMonth } = this.state
-    
+
     return ( 
       <div className="month">
           

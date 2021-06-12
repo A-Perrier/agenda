@@ -64,18 +64,19 @@ const months = {
 }
 
 /**
- * Returns the actual month at this moment
- * @param {String} type 'digit' || 'abbr' || 'fullname' 
+ * Returns the actual month at this moment.
+ * If type === null, returns only the Integer corresponding to the month
+ * @param {String|null} type 'digit' || 'abbr' || 'fullname' 
  */
-const getActualMonth = (type) => {
+const getActualMonth = (type = null) => {
   let currentMonth = Cache.get('currentMonth')
   
   if (currentMonth === null) {
     currentMonth = (new Date()).getMonth() + 1;
-    Cache.set('currentMonth', currentMonth)
+    Cache.set('currentMonth', currentMonth);
   }
-
-  return formatMonth(currentMonth, type)
+ 
+  return type !== null ? formatMonth(currentMonth, type) : currentMonth
 }
 
 const getActualYear = () => {
@@ -90,12 +91,15 @@ const getActualYear = () => {
 
 /**
  * Format a number between 1 and 12 to return the desired equivalent
+ * If type === null, returns only the Integer corresponding to the month
  * @param {Integer} monthNumber 
  * @param {String|null} type 'digit' || 'abbr' || 'fullname' 
  */
 const formatMonth = (monthNumber, type = null) => {
-  if (!+monthNumber || +monthNumber < 1 || +monthNumber > 12) throw new Error(`formatMonth attend en premier paramètre un entier de 1 à 12`)
-  if (type && (type !== 'digit' && type !== 'fullname' && type !== 'abbr')) throw new Error(`formatMonth attend en paramètre "digit", "abbr" ou "fullname"`)
+  if (!+monthNumber || +monthNumber < 1 || +monthNumber > 12) 
+    throw new Error(`formatMonth attend en premier paramètre un entier de 1 à 12`);
+  if (type && (type !== 'digit' && type !== 'fullname' && type !== 'abbr')) 
+    throw new Error(`formatMonth attend en paramètre "digit", "abbr" ou "fullname"`);
 
   return type !== null ? months[+monthNumber][type] : monthNumber
 }
