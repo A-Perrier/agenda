@@ -1,6 +1,14 @@
 import React from 'react';
 
-const Weeks = () => {
+const Weeks = ({ 
+  daysInMonth, 
+  daysInPrevMonth, 
+  firstDayOfMonth, 
+  lastDayOfMonth, 
+  lastDayOfPrevMonth 
+}) => {
+  console.log(daysInMonth, daysInPrevMonth, firstDayOfMonth, lastDayOfMonth, lastDayOfPrevMonth)
+
   return (
     <>
       <div className="week">

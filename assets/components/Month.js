@@ -133,10 +133,16 @@ class Month extends Component {
   
   
   render () {
-    const { monthName, year, daysInNextMonth, firstDayOfNextMonth, lastDayOfNextMonth } = this.state
-    console.log('Nombre de jours du mois précédent : ' + daysInNextMonth)
-    console.log('Premier jour du mois précédent: ' + firstDayOfNextMonth)
-    console.log('Dernier jour du mois précédent: ' + lastDayOfNextMonth)
+    const { 
+      monthName, 
+      year, 
+      daysInMonth, 
+      daysInPrevMonth, 
+      firstDayOfMonth, 
+      lastDayOfMonth, 
+      lastDayOfPrevMonth 
+    } = this.state
+
     return ( 
       <div className="month">
           
@@ -149,7 +155,14 @@ class Month extends Component {
           </header>
   
           <Weekdays />
-          <Weeks />
+          <Weeks 
+            daysInMonth={daysInMonth}
+            firstDayOfMonth={firstDayOfMonth}
+            lastDayOfMonth={lastDayOfMonth}
+
+            daysInPrevMonth={daysInPrevMonth}
+            lastDayOfPrevMonth={lastDayOfPrevMonth}
+          />
         </div>
      );
   }
