@@ -7,8 +7,14 @@ import {
   actualYear,
   formatMonth,
   daysInMonth,
+  daysInPrevMonth,
+  daysInNextMonth,
   firstDayOfMonth,
-  lastDayOfMonth } from '../shared/utils';
+  firstDayOfPrevMonth,
+  firstDayOfNextMonth,
+  lastDayOfMonth,
+  lastDayOfPrevMonth,
+  lastDayOfNextMonth } from '../shared/utils';
 import { LeftIcon, RightIcon } from '../shared/svg';
 import Cache from '../services/Cache';
 
@@ -22,7 +28,15 @@ class Month extends Component {
     year: actualYear(),
     daysInMonth: daysInMonth(actualMonth(), actualYear()),
     firstDayOfMonth: firstDayOfMonth(actualMonth(), actualYear()),
-    lastDayOfMonth: lastDayOfMonth(actualMonth(), actualYear())
+    lastDayOfMonth: lastDayOfMonth(actualMonth(), actualYear()),
+
+    daysInPrevMonth: daysInPrevMonth(actualMonth(), actualYear()),
+    firstDayOfPrevMonth: firstDayOfPrevMonth(actualMonth(), actualYear()),
+    lastDayOfPrevMonth: lastDayOfPrevMonth(actualMonth(), actualYear()),
+
+    daysInNextMonth: daysInNextMonth(actualMonth(), actualYear()),
+    firstDayOfNextMonth: firstDayOfNextMonth(actualMonth(), actualYear()),
+    lastDayOfNextMonth: lastDayOfNextMonth(actualMonth(), actualYear())
   };
 
   handlePrevMonth () {
@@ -43,7 +57,15 @@ class Month extends Component {
       monthName: formatMonth((monthNumber + 1), 'fullname'),
       daysInMonth: daysInMonth((monthNumber + 1), year),
       firstDayOfMonth: firstDayOfMonth((monthNumber + 1), year),  
-      lastDayOfMonth: lastDayOfMonth((monthNumber + 1), year)
+      lastDayOfMonth: lastDayOfMonth((monthNumber + 1), year),
+
+      daysInPrevMonth: daysInPrevMonth((monthNumber + 1), year),
+      firstDayOfPrevMonth: firstDayOfPrevMonth((monthNumber + 1), year),
+      lastDayOfPrevMonth: lastDayOfPrevMonth((monthNumber + 1), year),
+
+      daysInNextMonth: daysInNextMonth((monthNumber + 1), year),
+      firstDayOfNextMonth: firstDayOfNextMonth((monthNumber + 1), year),
+      lastDayOfNextMonth: lastDayOfNextMonth((monthNumber + 1), year)
     })
   }
 
@@ -55,40 +77,66 @@ class Month extends Component {
       monthName: formatMonth((monthNumber - 1), 'fullname'),
       daysInMonth: daysInMonth((monthNumber - 1), year),
       firstDayOfMonth: firstDayOfMonth((monthNumber - 1), year),
-      lastDayOfMonth: lastDayOfMonth((monthNumber - 1), year)
+      lastDayOfMonth: lastDayOfMonth((monthNumber - 1), year),
+
+      daysInPrevMonth: daysInPrevMonth((monthNumber - 1), year),
+      firstDayOfPrevMonth: firstDayOfPrevMonth((monthNumber - 1), year),
+      lastDayOfPrevMonth: lastDayOfPrevMonth((monthNumber - 1), year),
+
+      daysInNextMonth: daysInNextMonth((monthNumber - 1), year),
+      firstDayOfNextMonth: firstDayOfNextMonth((monthNumber - 1), year),
+      lastDayOfNextMonth: lastDayOfNextMonth((monthNumber - 1), year)
     })
   }
 
   addYear () {
     Cache.erase()
-    const { year, monthNumber, monthName } = this.state;
+    const { year } = this.state;
     this.setState({ 
       year: year + 1, 
       monthNumber: 1, 
       monthName: formatMonth(1, 'fullname'),
       daysInMonth: 31, // Janvier
       firstDayOfMonth: firstDayOfMonth(1, year + 1),
-      lastDayOfMonth: lastDayOfMonth(1, year + 1)
+      lastDayOfMonth: lastDayOfMonth(1, year + 1),
+
+      daysInPrevMonth: daysInPrevMonth(1, year + 1),
+      firstDayOfPrevMonth: firstDayOfPrevMonth(1, year + 1),
+      lastDayOfPrevMonth: lastDayOfPrevMonth(1, year + 1),
+
+      daysInNextMonth: daysInNextMonth(1, year + 1),
+      firstDayOfNextMonth: firstDayOfNextMonth(1, year + 1),
+      lastDayOfNextMonth: lastDayOfNextMonth(1, year + 1)
     })
   }
 
   removeYear () {
     Cache.erase()
-    const { year, monthNumber, monthName } = this.state;
+    const { year } = this.state;
     this.setState({ 
       year: year - 1, 
       monthNumber: 12, 
       monthName: formatMonth(12, 'fullname'),
       daysInMonth: 31, // Décembre
       firstDayOfMonth: firstDayOfMonth(12, year - 1),
-      lastDayOfMonth: lastDayOfMonth(12, year - 1)
+      lastDayOfMonth: lastDayOfMonth(12, year - 1),
+
+      daysInPrevMonth: daysInPrevMonth(12, year - 1),
+      firstDayOfPrevMonth: firstDayOfPrevMonth(12, year - 1),
+      lastDayOfPrevMonth: lastDayOfPrevMonth(12, year - 1),
+
+      daysInNextMonth: daysInNextMonth(12, year - 1),
+      firstDayOfNextMonth: firstDayOfNextMonth(12, year - 1),
+      lastDayOfNextMonth: lastDayOfNextMonth(12, year - 1)
     })
   }
   
   
   render () {
-    const { monthName, year, daysInMonth, firstDayOfMonth, lastDayOfMonth } = this.state
-    
+    const { monthName, year, daysInNextMonth, firstDayOfNextMonth, lastDayOfNextMonth } = this.state
+    console.log('Nombre de jours du mois précédent : ' + daysInNextMonth)
+    console.log('Premier jour du mois précédent: ' + firstDayOfNextMonth)
+    console.log('Dernier jour du mois précédent: ' + lastDayOfNextMonth)
     return ( 
       <div className="month">
           

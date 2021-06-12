@@ -113,30 +113,43 @@ const daysInMonth = (monthNumber, year) => {
   return (new Date(+year, +monthNumber, 0)).getDate()
 }
 
+const daysInPrevMonth = (monthNumber, year) => {
+  return monthNumber === 1 ? daysInMonth(12, year - 1) : daysInMonth(monthNumber - 1, year)
+}
+
+const daysInNextMonth = (monthNumber, year) => {
+  return monthNumber === 12 ? daysInMonth(1, year + 1) : daysInMonth(monthNumber + 1, year)
+}
+
 
 const firstDayOfMonth = (monthNumber, year) => {
-  let firstDay = Cache.get('firstDayOfMonth')
-
-  if (firstDay === null) {
-    // We need to say monthNumber - 1 because Date constructor is searching for month index, which is starting from 0
-    firstDay = new Date(+year, +monthNumber - 1, 1).toLocaleDateString('fr-FR', { weekday: 'long' });
-    Cache.set('firstDayOfMonth', capitalize(firstDay));
-  }
-  
+  // We need to say monthNumber - 1 because Date constructor is searching for month index, which is starting from 0
+  const firstDay = new Date(+year, +monthNumber - 1, 1).toLocaleDateString('fr-FR', { weekday: 'long' });
   return capitalize(firstDay);
 }
 
+const firstDayOfPrevMonth = (monthNumber, year) => {
+  return monthNumber === 1 ? firstDayOfMonth(12, year - 1) : firstDayOfMonth(monthNumber - 1, year)
+}
+
+const firstDayOfNextMonth = (monthNumber, year) => {
+  return monthNumber === 12 ? firstDayOfMonth(1, year + 1) : firstDayOfMonth(monthNumber + 1, year)
+}
+
 const lastDayOfMonth = (monthNumber, year) => {
-  let lastDay = Cache.get('lastDayOfMonth')
-  
-  if (lastDay === null) {
-    // We keep monthNumber here, because 0 parameter will check the previous day of the first one of the current monthIndex.
-    // Our monthNumber is equal to monthIndex + 1, so we don't need to look to the next index
-    lastDay = new Date(+year, +monthNumber, 0).toLocaleDateString('fr-FR', { weekday: 'long' });
-    Cache.set('lastDayOfMonth', capitalize(lastDay));
-  }
+  // We keep monthNumber here, because 0 parameter will check the previous day of the first one of the current monthIndex.
+  // Our monthNumber is equal to monthIndex + 1, so we don't need to look to the next index
+  const lastDay = new Date(+year, +monthNumber, 0).toLocaleDateString('fr-FR', { weekday: 'long' });
   
   return capitalize(lastDay);
+}
+
+const lastDayOfPrevMonth = (monthNumber, year) => {
+  return monthNumber === 1 ? lastDayOfMonth(12, year - 1) : lastDayOfMonth(monthNumber - 1, year)
+}
+
+const lastDayOfNextMonth = (monthNumber, year) => {
+  return monthNumber === 12 ? lastDayOfMonth(1, year + 1) : lastDayOfMonth(monthNumber + 1, year)
 }
 
 
@@ -151,6 +164,12 @@ export {
   actualYear,
   formatMonth,
   daysInMonth,
+  daysInPrevMonth,
+  daysInNextMonth,
   firstDayOfMonth,
-  lastDayOfMonth
+  firstDayOfPrevMonth,
+  firstDayOfNextMonth,
+  lastDayOfMonth,
+  lastDayOfPrevMonth,
+  lastDayOfNextMonth
 }
