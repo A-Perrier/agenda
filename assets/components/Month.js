@@ -3,19 +3,26 @@ import MonthNavigation from './MonthNavigation';
 import Weekdays from './Weekdays';
 import Weeks from './Weeks';
 import { 
-  getActualMonth,
-  getActualYear,
+  actualMonth,
+  actualYear,
   formatMonth,
-  daysInMonth } from '../shared/utils';
+  daysInMonth,
+  firstDayOfMonth,
+  lastDayOfMonth } from '../shared/utils';
 import { LeftIcon, RightIcon } from '../shared/svg';
+import Cache from '../services/Cache';
+
+
 
 
 class Month extends Component {
   state = {
-    monthNumber: getActualMonth(),
-    monthName: getActualMonth('fullname'),
-    year: getActualYear(),
-    daysInMonth: daysInMonth(getActualMonth(), getActualYear())
+    monthNumber: actualMonth(),
+    monthName: actualMonth('fullname'),
+    year: actualYear(),
+    daysInMonth: daysInMonth(actualMonth(), actualYear()),
+    firstDayOfMonth: firstDayOfMonth(actualMonth(), actualYear()),
+    lastDayOfMonth: lastDayOfMonth(actualMonth(), actualYear())
   };
 
   handlePrevMonth () {
@@ -29,47 +36,59 @@ class Month extends Component {
   }
 
   addMonth () {
+    Cache.erase()
     const { monthNumber, year } = this.state
     this.setState({ 
       monthNumber: monthNumber + 1, 
       monthName: formatMonth((monthNumber + 1), 'fullname'),
-      daysInMonth: daysInMonth((monthNumber + 1), year)  
+      daysInMonth: daysInMonth((monthNumber + 1), year),
+      firstDayOfMonth: firstDayOfMonth((monthNumber + 1), year),  
+      lastDayOfMonth: lastDayOfMonth((monthNumber + 1), year)
     })
   }
 
   removeMonth () {
+    Cache.erase()
     const { monthNumber, year } = this.state
     this.setState({ 
       monthNumber: monthNumber - 1, 
       monthName: formatMonth((monthNumber - 1), 'fullname'),
-      daysInMonth: daysInMonth((monthNumber - 1), year)
+      daysInMonth: daysInMonth((monthNumber - 1), year),
+      firstDayOfMonth: firstDayOfMonth((monthNumber - 1), year),
+      lastDayOfMonth: lastDayOfMonth((monthNumber - 1), year)
     })
   }
 
   addYear () {
+    Cache.erase()
     const { year, monthNumber, monthName } = this.state;
     this.setState({ 
       year: year + 1, 
       monthNumber: 1, 
       monthName: formatMonth(1, 'fullname'),
-      daysInMonth: 31 // Janvier
+      daysInMonth: 31, // Janvier
+      firstDayOfMonth: firstDayOfMonth(1, year + 1),
+      lastDayOfMonth: lastDayOfMonth(1, year + 1)
     })
   }
 
   removeYear () {
+    Cache.erase()
     const { year, monthNumber, monthName } = this.state;
     this.setState({ 
       year: year - 1, 
       monthNumber: 12, 
       monthName: formatMonth(12, 'fullname'),
-      daysInMonth: 31 // Décembre
+      daysInMonth: 31, // Décembre
+      firstDayOfMonth: firstDayOfMonth(12, year - 1),
+      lastDayOfMonth: lastDayOfMonth(12, year - 1)
     })
   }
   
   
   render () {
-    const { monthName, year, daysInMonth } = this.state
-
+    const { monthName, year, daysInMonth, firstDayOfMonth, lastDayOfMonth } = this.state
+    
     return ( 
       <div className="month">
           

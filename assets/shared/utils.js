@@ -68,7 +68,7 @@ const months = {
  * If type === null, returns only the Integer corresponding to the month
  * @param {String|null} type 'digit' || 'abbr' || 'fullname' 
  */
-const getActualMonth = (type = null) => {
+const actualMonth = (type = null) => {
   let currentMonth = Cache.get('currentMonth')
   
   if (currentMonth === null) {
@@ -79,7 +79,7 @@ const getActualMonth = (type = null) => {
   return type !== null ? formatMonth(currentMonth, type) : currentMonth
 }
 
-const getActualYear = () => {
+const actualYear = () => {
   let currentYear = Cache.get('currentYear')
 
   if (currentYear === null) {
@@ -113,10 +113,44 @@ const daysInMonth = (monthNumber, year) => {
   return (new Date(+year, +monthNumber, 0)).getDate()
 }
 
+
+const firstDayOfMonth = (monthNumber, year) => {
+  let firstDay = Cache.get('firstDayOfMonth')
+
+  if (firstDay === null) {
+    // We need to say monthNumber - 1 because Date constructor is searching for month index, which is starting from 0
+    firstDay = new Date(+year, +monthNumber - 1, 1).toLocaleDateString('fr-FR', { weekday: 'long' });
+    Cache.set('firstDayOfMonth', capitalize(firstDay));
+  }
+  
+  return capitalize(firstDay);
+}
+
+const lastDayOfMonth = (monthNumber, year) => {
+  let lastDay = Cache.get('lastDayOfMonth')
+  
+  if (lastDay === null) {
+    // We keep monthNumber here, because 0 parameter will check the previous day of the first one of the current monthIndex.
+    // Our monthNumber is equal to monthIndex + 1, so we don't need to look to the next index
+    lastDay = new Date(+year, +monthNumber, 0).toLocaleDateString('fr-FR', { weekday: 'long' });
+    Cache.set('lastDayOfMonth', capitalize(lastDay));
+  }
+  
+  return capitalize(lastDay);
+}
+
+
+const capitalize = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
 export {
   months,
-  getActualMonth,
-  getActualYear,
+  actualMonth,
+  actualYear,
   formatMonth,
-  daysInMonth
+  daysInMonth,
+  firstDayOfMonth,
+  lastDayOfMonth
 }
