@@ -3,12 +3,13 @@ import './Categories.scss';
 import { PlusIcon } from '../../shared/svg';
 import CSS from '../../const';
 import Counter from '../Globals/Counter';
+import ColorPicker from './ColorPicker';
 
 
 const Categories = ({ maxCategoryLength }) => {
   const [newCategory, setNewCategory] = useState('')
   const [limitInputText, setLimitInputText] = useState(maxCategoryLength)
-  const [isInputActive, setIsInputActive] = useState(false)
+  const [isInputActive, setIsInputActive] = useState(true)
 
   const onNewCategoryInteraction = () => setIsInputActive(!isInputActive)
 
@@ -47,8 +48,8 @@ const Categories = ({ maxCategoryLength }) => {
                    className="categories__input" value={newCategory} 
                    onChange={handleInputChange} onKeyUp={handleSubmit}
                   />
-            
             <Counter limit={limitInputText} />
+            <ColorPicker />
           </>
         }
       </section>
