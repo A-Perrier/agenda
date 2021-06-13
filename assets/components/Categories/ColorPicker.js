@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './ColorPicker.scss';
 
-const ColorPicker = () => {
-  const colors = ["#CB28E0", "#72B514", "#0B67B8", "#EB7221", "#E01563"];
+const ColorPicker = ({ onColorSelected }) => {
+  const colors = ["#CB28E0", "#72B514", "#46BBDB", "#EB7221", "#E01563"];
   const [colorSelected, setColorSelected] = useState(null);
 
   const handleSelect = (hex) => {
@@ -11,6 +11,7 @@ const ColorPicker = () => {
     const colors = document.querySelectorAll('.color-picker__choice');
     colors.forEach(el => el.classList.remove('selected'));
     setColorSelected(hex);
+    onColorSelected(hex);
   }
 
   return ( 

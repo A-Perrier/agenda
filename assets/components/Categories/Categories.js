@@ -8,6 +8,7 @@ import ColorPicker from './ColorPicker';
 
 const Categories = ({ maxCategoryLength }) => {
   const [newCategory, setNewCategory] = useState('')
+  const [colorSelected, setColorSelected] = useState(null)
   const [limitInputText, setLimitInputText] = useState(maxCategoryLength)
   const [isInputActive, setIsInputActive] = useState(true)
 
@@ -28,9 +29,6 @@ const Categories = ({ maxCategoryLength }) => {
   }
 
   const handleSubmit = (event) => {
-    const keyCode = event.which;
-    if (keyCode !== 13) return
-
     
   }
  
@@ -43,14 +41,15 @@ const Categories = ({ maxCategoryLength }) => {
       <section className="categories">
         { 
           isInputActive &&
-          <>
+          <div className="categories__create-block">
             <input type="text" placeholder="Nom de la catégorie" 
                    className="categories__input" value={newCategory} 
-                   onChange={handleInputChange} onKeyUp={handleSubmit}
+                   onChange={handleInputChange}
                   />
             <Counter limit={limitInputText} />
-            <ColorPicker />
-          </>
+            <ColorPicker onColorSelected={(hex) => setColorSelected(hex)}/>
+            <button type="submit" onClick={handleSubmit}>Go</button>
+          </div>
         }
       </section>
     </div>
