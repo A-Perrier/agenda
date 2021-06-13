@@ -63,6 +63,37 @@ const months = {
   }
 }
 
+const days = {
+  "Lundi": {
+    index: 1,
+    abbr: "LU"
+  },
+  "Mardi": {
+    index: 2,
+    abbr: "MA"
+  },
+  "Mercredi": {
+    index: 3,
+    abbr: "ME"
+  },
+  "Jeudi": {
+    index: 4,
+    abbr: "JE"
+  },
+  "Vendredi": {
+    index: 5,
+    abbr: "VE"
+  },
+  "Samedi": {
+    index: 6,
+    abbr: "SA"
+  },
+  "Dimanche": {
+    index: 7,
+    abbr: "DI"
+  },
+}
+
 /**
  * Returns the actual month at this moment.
  * If type === null, returns only the Integer corresponding to the month
@@ -160,6 +191,7 @@ const capitalize = (string) => {
 
 export {
   months,
+  days,
   actualMonth,
   actualYear,
   formatMonth,

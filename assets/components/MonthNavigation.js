@@ -1,13 +1,8 @@
 import React from 'react';
-import { RightIcon, LeftIcon } from '../shared/svg'
 
-const MonthNavigation = ({ children }) => {
+const MonthNavigation = ({ children }) => 
+  <div className="month-navigation">
+    { children }
+  </div>
 
-  return ( 
-    <div className="month-navigation">
-      { children }
-    </div>
-   );
-}
- 
 export default MonthNavigation;

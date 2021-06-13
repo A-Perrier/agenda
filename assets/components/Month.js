@@ -15,7 +15,6 @@ import {
   lastDayOfMonth,
   lastDayOfPrevMonth,
   lastDayOfNextMonth } from '../shared/utils';
-import { LeftIcon, RightIcon } from '../shared/svg';
 import Cache from '../services/Cache';
 
 
@@ -138,9 +137,7 @@ class Month extends Component {
       year, 
       daysInMonth, 
       daysInPrevMonth, 
-      firstDayOfMonth, 
-      lastDayOfMonth, 
-      lastDayOfPrevMonth 
+      firstDayOfMonth
     } = this.state
 
     return ( 
@@ -149,8 +146,8 @@ class Month extends Component {
           <header>
             <h1>{monthName} {year}</h1>
             <MonthNavigation>
-              <LeftIcon onClick={(e) => this.handlePrevMonth(e)} />
-              <RightIcon onClick={(e) => this.handleNextMonth(e)} />
+              <button className="lefticon icon" onClick={(e) => this.handlePrevMonth(e)} />
+              <button className="righticon icon" onClick={(e) => this.handleNextMonth(e)} />
             </MonthNavigation>
           </header>
   
@@ -158,10 +155,12 @@ class Month extends Component {
           <Weeks 
             daysInMonth={daysInMonth}
             firstDayOfMonth={firstDayOfMonth}
-            lastDayOfMonth={lastDayOfMonth}
-
             daysInPrevMonth={daysInPrevMonth}
-            lastDayOfPrevMonth={lastDayOfPrevMonth}
+            monthName={monthName}
+            goToPrevMonth={() => this.removeMonth()}
+            goToPrevYear={() => this.removeYear()}
+            goToNextMonth={() => this.addMonth()}
+            goToNextYear={() => this.addYear()}
           />
         </div>
      );

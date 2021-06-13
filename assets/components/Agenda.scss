@@ -12,7 +12,32 @@
 
     .month-navigation {
         margin-right: 5%;
-        svg:first-of-type { margin-right: 1rem; }
+
+        button.icon {
+            background: #ededed;
+            border: none;
+            padding: .8rem;
+            border-radius: 3px;
+            cursor: pointer;
+
+            &.lefticon { 
+                background-image: url('../img/lefticon.svg');
+                background-size: contain;
+                margin-right: 1rem;
+            }
+            &.righticon {
+                background-image: url('../img/righticon.svg');
+                background-size: contain;
+            }
+          }
+          
+          button.icon:active {
+            background: #e5e5e5;
+            -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+               -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+                    box-shadow: inset 0px 0px 5px #c1c1c1;
+             outline: none;
+          }
     }
 
     .month {
