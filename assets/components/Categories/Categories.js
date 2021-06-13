@@ -7,9 +7,10 @@ import ColorPicker from './ColorPicker';
 
 
 const Categories = ({ maxCategoryLength }) => {
+  const [limitInputText, setLimitInputText] = useState(maxCategoryLength)
+
   const [newCategory, setNewCategory] = useState('')
   const [colorSelected, setColorSelected] = useState(null)
-  const [limitInputText, setLimitInputText] = useState(maxCategoryLength)
   const [isInputActive, setIsInputActive] = useState(true)
 
   const onNewCategoryInteraction = () => setIsInputActive(!isInputActive)
@@ -28,7 +29,7 @@ const Categories = ({ maxCategoryLength }) => {
     setLimitInputText(maxCategoryLength - category.length)
   }
 
-  const handleSubmit = (event) => {
+  const addCategory = (event) => {
     
   }
  
@@ -42,13 +43,15 @@ const Categories = ({ maxCategoryLength }) => {
         { 
           isInputActive &&
           <div className="categories__create-block">
-            <input type="text" placeholder="Nom de la catégorie" 
-                   className="categories__input" value={newCategory} 
-                   onChange={handleInputChange}
-                  />
-            <Counter limit={limitInputText} />
-            <ColorPicker onColorSelected={(hex) => setColorSelected(hex)}/>
-            <button type="submit" onClick={handleSubmit}>Go</button>
+            <div className="categories__form">
+              <input type="text" placeholder="Nom de la catégorie" 
+                    className="categories__input" value={newCategory} 
+                    onChange={handleInputChange}
+                    />
+              <Counter limit={limitInputText} />
+              <ColorPicker onColorSelected={(hex) => setColorSelected(hex)}/>
+            </div>
+            <button className="btn btn-submit" onClick={addCategory}>Créer</button>
           </div>
         }
       </section>

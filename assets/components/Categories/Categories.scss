@@ -15,6 +15,37 @@
 
   .categories {
 
-    
+    &__form {
+      width: fit-content;
+      margin: auto;
+    }
+
+    & .btn-submit {
+      display: block;
+      margin: auto;
+    }
+  }
+}
+
+@media screen and (min-width: $tablet-breakpoint) 
+{
+  .categories-container {
+
+    .categories {
+        width: 50%;
+        margin-right: auto;
+      
+      &__form { margin: inherit; }
+
+      &__create-block {
+        display: flex;
+        justify-content: space-around;
+      }
+      
+      & .btn-submit { 
+        margin-left: 3rem;
+        margin-top: .5rem;
+      }
+    }
   }
 }

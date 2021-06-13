@@ -1,0 +1,16 @@
+.btn {
+  border-radius: 3px;
+  background-color: $secondary;
+  color: white;
+  font-size: .8rem;
+  padding: .8rem 2rem;
+  width: 8rem;
+  border: 1px solid $secondary;
+  transition: .3s;
+  cursor: pointer;
+
+  &:hover {
+    color: $secondary;
+    background-color: white;
+  }
+}

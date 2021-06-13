@@ -2,6 +2,7 @@
 @import './tools/reset.scss';
 
 @import './modules/form.scss';
+@import './modules/button.scss';
 
 :root {
   font-size: 16px;
@@ -19,6 +20,3 @@ h1 {
 
 
 .icon { cursor: pointer; }
-
-$tablet-breakpoint: 768px;
-$desktop-breakpoint: 1024px;
