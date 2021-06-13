@@ -1,6 +1,6 @@
 import React from 'react';
 import Week from './Week';
-import { days } from '../shared/utils';
+import { days } from '../../shared/utils';
 
 const Weeks = ({ 
   daysInMonth, 

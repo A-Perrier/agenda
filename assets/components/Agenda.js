@@ -6,7 +6,7 @@ import './Agenda.scss';
 
 // start the Stimulus application
 import '../bootstrap';
-import Calendar from './Calendar';
+import Calendar from './Calendar/Calendar';
 
 
 
