@@ -3,13 +3,13 @@ import React from 'react';
 const Weekdays = () => {
   return ( 
     <div className="weekdays">
-      <div className="weekday">LU</div>
-      <div className="weekday">MA</div>
-      <div className="weekday">ME</div>
-      <div className="weekday">JE</div>
-      <div className="weekday">VE</div>
-      <div className="weekday">SA</div>
-      <div className="weekday">DI</div>
+      <div className="weekday">Lu</div>
+      <div className="weekday">Ma</div>
+      <div className="weekday">Me</div>
+      <div className="weekday">Je</div>
+      <div className="weekday">Ve</div>
+      <div className="weekday">Sa</div>
+      <div className="weekday">Di</div>
     </div>
    );
 }

@@ -61,6 +61,7 @@
         padding: 1rem 0;
         color: $primary;
         font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
     }
 
     .day {
@@ -70,6 +71,8 @@
         text-align: center;
         padding: 1rem 0;
         cursor: pointer;
+        font-weight: bold;
+        color: $default-color;
 
         &__prev-month, &__next-month { color: $disable-color; }
         
