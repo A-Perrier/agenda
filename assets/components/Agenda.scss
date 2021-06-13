@@ -1,9 +1,11 @@
 @import '../styles/tools/typography.scss';
 
-.calendar {
+.agenda-container {
     width: 90%;
     margin: 2rem auto;
+}
 
+.calendar {
     header {
         display: flex;
         justify-content: space-between;
