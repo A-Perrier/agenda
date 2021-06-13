@@ -1,6 +1,12 @@
 @import './tools/typography.scss';
 @import './tools/reset.scss';
 
+@import './modules/form.scss';
+
+:root {
+  font-size: 16px;
+}
+
 body {
   background-color: $bg-color;
 }
@@ -8,7 +14,9 @@ body {
 h1 { 
   color: $primary;
   font-size: 36px;
+  margin-bottom: 1rem;
 }
+
 
 .icon { cursor: pointer; }
 

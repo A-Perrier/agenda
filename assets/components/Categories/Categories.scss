@@ -1,3 +1,20 @@
+@import '../../styles/tools/typography.scss';
+
 .categories-container {
   margin-top: 2rem;
+
+  h1 {
+    .icon {
+      display: inline-block;
+      margin-left: 1rem;
+      transform: translateY(13%);
+      background: none;
+      border: none;
+    }
+  }
+
+  .categories {
+
+    
+  }
 }

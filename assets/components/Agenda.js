@@ -16,7 +16,7 @@ const Agenda = () => {
   return (
   <div className="agenda-container">
     <Calendar />
-    <Categories />
+    <Categories maxCategoryLength="40" />
   </div>);
 }
 

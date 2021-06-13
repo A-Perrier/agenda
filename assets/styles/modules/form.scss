@@ -1,0 +1,15 @@
+input[type=text] {
+  border: 1px solid $heavy-line;
+  height: 1.5rem;
+  border-radius: 3px;
+  text-indent: .2rem;
+  min-width: 12.5rem;
+  font-size: 1rem;
+}
+
+.counter {
+  padding-left: 0.5rem;
+  color: $default-color;
+  font-weight: bold;
+  &-blocked { color: $danger; }
+}
