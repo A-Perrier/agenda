@@ -1,1 +1,1 @@
-export const CATEGORY_ENTRYPOINT = '/categories'
+export const CATEGORY_ENTRYPOINT = '/api/categories'

@@ -7,6 +7,7 @@ import ColorPicker from './ColorPicker';
 import Axios from 'axios';
 import { CATEGORY_ENTRYPOINT } from '../../config';
 import { errorMessage } from '../../shared/utils';
+import { debugDDResponse } from '../../services/Debug';
 
 
 const Categories = ({ maxCategoryLength }) => {
@@ -46,7 +47,12 @@ const Categories = ({ maxCategoryLength }) => {
       setShowColorError(true);
       return;
     }
-    //Axios.post('')
+    
+    Axios
+      .post(
+      CATEGORY_ENTRYPOINT,
+      { name: newCategory, color: colorSelected })
+      .then(({data}) => debugDDResponse(data))
   }
  
   return ( 
