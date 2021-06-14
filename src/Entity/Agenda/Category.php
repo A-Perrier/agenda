@@ -2,8 +2,9 @@
 
 namespace App\Entity\Agenda;
 
-use App\Repository\Agenda\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\Agenda\CategoryRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -16,16 +17,19 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"category:fetch"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"category:fetch"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=7)
+     * @Groups({"category:fetch"})
      */
     private $color;
 

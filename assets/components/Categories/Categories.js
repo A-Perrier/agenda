@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Categories.scss';
 import { PlusIcon } from '../../shared/svg';
 import CSS from '../../const';
 import Counter from '../Globals/Counter';
 import ColorPicker from './ColorPicker';
-import { create } from '../../services/Api/Categories';
+import { findAll, create } from '../../services/Api/Categories';
 import { errorMessage } from '../../shared/utils';
 
 
 const Categories = ({ maxCategoryLength }) => {
   const [limitInputText, setLimitInputText] = useState(maxCategoryLength)
+  const [categories, setCategories] = useState([]);
 
   const [newCategory, setNewCategory] = useState('')
   const [showInputError, setShowInputError] = useState(null)
@@ -17,6 +18,20 @@ const Categories = ({ maxCategoryLength }) => {
 
   const [colorSelected, setColorSelected] = useState(null)
   const [showColorError, setShowColorError] = useState(null)
+
+  const fetchCategories = async () => {
+    try {
+      const categories = await findAll();
+      setCategories(categories);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchCategories()
+  }, [])
+
 
   const onNewCategoryInteraction = () => setIsInputActive(!isInputActive)
 
@@ -48,7 +63,6 @@ const Categories = ({ maxCategoryLength }) => {
     
     const id = await create({ name: newCategory, color: colorSelected })
 
-    
     console.log(id)
   }
  
