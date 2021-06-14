@@ -12,7 +12,7 @@ const Category = ({data, onSelect, onUnselect}) => {
   return ( 
     <div className="category" index={id}>
       <p>
-        <span className={`checkbox ${isSelected ? 'selected' : ''}`} style={{backgroundColor: color}} onClick={handleSelect}></span>
+        <span className={`icon checkbox ${isSelected ? 'selected' : ''}`} style={{backgroundColor: color}} onClick={handleSelect}></span>
         { name }
       </p>
     </div>

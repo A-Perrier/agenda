@@ -34,6 +34,7 @@
 
   .category {
     margin: .6rem 0 .6rem 0;
+
     .checkbox {
       display: inline-block;
       width: 1.2rem;
@@ -41,8 +42,9 @@
       border-radius: 3px;
       transform: translateY(20%);
       margin-right: .5rem;
+      @include noSelect; 
       
-      &.selected::before { @include check(30%, 13%) }
+      &.selected::before { @include check(38%, 24%, .8rem) }
     }
   }
 }

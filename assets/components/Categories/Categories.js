@@ -9,13 +9,14 @@ import { errorMessage } from '../../shared/utils';
 import Category from './Category';
 
 
+
 const Categories = ({ maxCategoryLength }) => {
   const [limitInputText, setLimitInputText] = useState(maxCategoryLength)
   const [categories, setCategories] = useState([]);
 
   const [newCategory, setNewCategory] = useState('')
   const [showInputError, setShowInputError] = useState(null)
-  const [isInputActive, setIsInputActive] = useState(true)
+  const [isInputActive, setIsInputActive] = useState(false)
 
   const [colorSelected, setColorSelected] = useState(null)
   const [showColorError, setShowColorError] = useState(null)
@@ -23,14 +24,11 @@ const Categories = ({ maxCategoryLength }) => {
   const [checkedCategories, setCheckedCategories] = useState([])
 
   const fetchCategories = async () => {
-    try {
-      const categories = await findAll();
-      setCategories(categories);
-      setCheckedCategories(categories)
-    } catch (error) {
-      console.log(error)
-    }
+    const categories = await findAll();
+    setCategories(categories);
+    setCheckedCategories(categories)
   }
+
 
   useEffect(() => {
     fetchCategories()
@@ -38,6 +36,7 @@ const Categories = ({ maxCategoryLength }) => {
 
 
   const onNewCategoryInteraction = () => setIsInputActive(!isInputActive);
+
 
   const handleInputChange = ({ currentTarget }) => {
     const category = currentTarget.value;
@@ -54,6 +53,7 @@ const Categories = ({ maxCategoryLength }) => {
     category.length > 0 && setShowInputError(false)
   }
 
+
   const addCategory = async (event) => {
     if (newCategory === '') {
       setShowInputError(true);
@@ -64,19 +64,27 @@ const Categories = ({ maxCategoryLength }) => {
       setShowColorError(true);
       return;
     }
-    
-    const id = await create({ name: newCategory, color: colorSelected })
 
-    console.log(id)
+    const id = await create({ name: newCategory, color: colorSelected });
+    const category = {id, name: newCategory, color: colorSelected};
+
+    const copy = categories.slice();
+    copy.push(category);
+    setCategories(copy);
+    checkedCategories.push(category);
+
+    setNewCategory('');
   }
 
+
   const handleCategorySelect = (category) => checkedCategories.push(category);
+
 
   const handleCategoryUnselect = (category) => {
     const index = checkedCategories.indexOf(category);
     index !== -1 && checkedCategories.splice(index, 1)
   }
- 
+  
 
   return ( 
     <div className="categories-container">

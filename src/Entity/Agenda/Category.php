@@ -5,6 +5,7 @@ namespace App\Entity\Agenda;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\Agenda\CategoryRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -24,12 +25,14 @@ class Category
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"category:fetch"})
+     * @Assert\NotBlank(message="La catégorie doit avoir un nom")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=7)
      * @Groups({"category:fetch"})
+     * @Assert\NotNull(message="La catégorie doit être associée à une couleur")
      */
     private $color;
 

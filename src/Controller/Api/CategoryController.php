@@ -33,6 +33,8 @@ class CategoryController extends AbstractController
 
     $event = new CategoryCreateEvent($category);
     $this->dispatcher->dispatch($event, Category::CREATE_EVENT);
+    
+    if (isset($category->errors)) return $this->json($category->errors, HTTP::BAD_REQUEST);
 
     return $this->json($category->getId(), HTTP::CREATED);
   }

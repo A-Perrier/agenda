@@ -2,9 +2,10 @@
 namespace App\Events\Agenda\Categories;
 
 use App\Entity\Agenda\Category;
+use App\Interfaces\EventInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class CategoryCreateEvent extends Event
+class CategoryCreateEvent extends Event implements EventInterface
 {
   private $category;
 

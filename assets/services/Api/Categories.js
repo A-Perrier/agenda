@@ -2,6 +2,7 @@ import Axios from 'axios';
 import { CATEGORY_ENTRYPOINT } from '../../config';
 import { debugDDResponse } from '../Debug';
 import Cache from '../Cache';
+import { dangerToast } from '../Toast';
 
 const cacheKey = "categories";
 
@@ -34,6 +35,12 @@ export const create = (data) => {
       }
     )
     .catch(
-      response => response
+      ({ response }) => {
+        const { data } = response;
+        for (const [errorField, message] of Object.entries(data)) {
+          dangerToast(message)
+        }
+        return response.data
+      }
     )
 }
