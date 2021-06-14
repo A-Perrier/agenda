@@ -4,10 +4,8 @@ import { PlusIcon } from '../../shared/svg';
 import CSS from '../../const';
 import Counter from '../Globals/Counter';
 import ColorPicker from './ColorPicker';
-import Axios from 'axios';
-import { CATEGORY_ENTRYPOINT } from '../../config';
+import { create } from '../../services/Api/Categories';
 import { errorMessage } from '../../shared/utils';
-import { debugDDResponse } from '../../services/Debug';
 
 
 const Categories = ({ maxCategoryLength }) => {
@@ -48,11 +46,7 @@ const Categories = ({ maxCategoryLength }) => {
       return;
     }
     
-    Axios
-      .post(
-      CATEGORY_ENTRYPOINT,
-      { name: newCategory, color: colorSelected })
-      .then(({data}) => debugDDResponse(data))
+    create({ name: newCategory, color: colorSelected })
   }
  
   return ( 

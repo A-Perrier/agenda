@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Category
 {
+    public const CREATE_EVENT = 'category.create';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
