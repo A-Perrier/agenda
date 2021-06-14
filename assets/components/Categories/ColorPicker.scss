@@ -2,7 +2,7 @@
 
 .color-picker {
 
-  margin: .5rem 0 1rem 0;
+  margin-top: 0.5rem;;
 
   &__choice {
     position: relative;
@@ -15,7 +15,7 @@
 
     &.selected::before {
       position: absolute;
-      transform: translate(50%, 40%);
+      transform: translate(61%, 40%);
       content: '✓';
       color: white;
       font-weight: 900;

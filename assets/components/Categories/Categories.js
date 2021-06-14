@@ -4,14 +4,20 @@ import { PlusIcon } from '../../shared/svg';
 import CSS from '../../const';
 import Counter from '../Globals/Counter';
 import ColorPicker from './ColorPicker';
+import Axios from 'axios';
+import { CATEGORY_ENTRYPOINT } from '../../config';
+import { errorMessage } from '../../shared/utils';
 
 
 const Categories = ({ maxCategoryLength }) => {
   const [limitInputText, setLimitInputText] = useState(maxCategoryLength)
 
   const [newCategory, setNewCategory] = useState('')
-  const [colorSelected, setColorSelected] = useState(null)
+  const [showInputError, setShowInputError] = useState(null)
   const [isInputActive, setIsInputActive] = useState(true)
+
+  const [colorSelected, setColorSelected] = useState(null)
+  const [showColorError, setShowColorError] = useState(null)
 
   const onNewCategoryInteraction = () => setIsInputActive(!isInputActive)
 
@@ -27,10 +33,20 @@ const Categories = ({ maxCategoryLength }) => {
 
     setNewCategory(category)
     setLimitInputText(maxCategoryLength - category.length)
+    category.length > 0 && setShowInputError(false)
   }
 
   const addCategory = (event) => {
-    
+    if (newCategory === '') {
+      setShowInputError(true);
+      return;
+    }
+
+    if (colorSelected === null) {
+      setShowColorError(true);
+      return;
+    }
+    //Axios.post('')
   }
  
   return ( 
@@ -48,8 +64,10 @@ const Categories = ({ maxCategoryLength }) => {
                     className="categories__input" value={newCategory} 
                     onChange={handleInputChange}
                     />
+              { showInputError && errorMessage('Le nom ne peut rester vide') }
               <Counter limit={limitInputText} />
-              <ColorPicker onColorSelected={(hex) => setColorSelected(hex)}/>
+              <ColorPicker onColorSelected={(hex) => setColorSelected(hex)} />
+              { showColorError && errorMessage('Une couleur doit être choisie') }
             </div>
             <button className="btn btn-submit" onClick={addCategory}>Créer</button>
           </div>

@@ -1,3 +1,4 @@
+import React from 'react';
 import Cache from '../services/Cache';
 
 const months = {
@@ -188,6 +189,11 @@ const capitalize = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+const errorMessage = message => 
+  <p className="form-error">
+    <span className="form-badge">ERROR</span>
+    { message }
+  </p>
 
 export {
   months,
@@ -203,5 +209,6 @@ export {
   firstDayOfNextMonth,
   lastDayOfMonth,
   lastDayOfPrevMonth,
-  lastDayOfNextMonth
+  lastDayOfNextMonth,
+  errorMessage
 }
