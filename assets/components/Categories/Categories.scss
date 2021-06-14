@@ -1,4 +1,5 @@
 @import '../../styles/tools/typography.scss';
+@import '../../styles/tools/mixins.scss';
 
 .categories-container {
   margin-top: 2rem;
@@ -24,6 +25,24 @@
     & .btn-submit {
       display: block;
       margin: auto;
+    }
+  }
+
+  .categories-list {
+    margin-top: 1rem;
+  }
+
+  .category {
+    margin: .6rem 0 .6rem 0;
+    .checkbox {
+      display: inline-block;
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 3px;
+      transform: translateY(20%);
+      margin-right: .5rem;
+      
+      &.selected::before { @include check(30%, 13%) }
     }
   }
 }

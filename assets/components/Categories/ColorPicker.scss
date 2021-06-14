@@ -1,4 +1,5 @@
 @import '../../styles/tools/typography.scss';
+@import '../../styles/tools/mixins.scss';
 
 .color-picker {
 
@@ -13,12 +14,6 @@
     cursor: pointer;
     &:not(:first-of-type) { margin-left: 1rem; }
 
-    &.selected::before {
-      position: absolute;
-      transform: translate(61%, 40%);
-      content: '✓';
-      color: white;
-      font-weight: 900;
-    }
+    &.selected::before { @include check(61%, 40%) }
   }
 }

@@ -1,0 +1,7 @@
+@mixin check ($xPos, $yPos) {
+  position: absolute;
+  transform: translate($xPos, $yPos);
+  content: '✓';
+  color: white;
+  font-weight: 900;
+}

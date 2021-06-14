@@ -6,6 +6,7 @@ import Counter from '../Globals/Counter';
 import ColorPicker from './ColorPicker';
 import { findAll, create } from '../../services/Api/Categories';
 import { errorMessage } from '../../shared/utils';
+import Category from './Category';
 
 
 const Categories = ({ maxCategoryLength }) => {
@@ -89,6 +90,13 @@ const Categories = ({ maxCategoryLength }) => {
             <button className="btn btn-submit" onClick={addCategory}>Créer</button>
           </div>
         }
+        <div className="categories-list">
+        {
+          categories.map(category =>
+            <Category id={category.id} name={category.name} color={category.color} isSelected/>
+          )
+        }
+        </div>
       </section>
     </div>
   );
