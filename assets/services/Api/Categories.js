@@ -6,12 +6,15 @@ const axios = Axios.create()
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 export const create = (data) => {
-  axios
+  return axios
     .post( CATEGORY_ENTRYPOINT, data)
     .then(
-      ({data, statusCode}) => debugDDResponse(data)
+      async ({ data }) => {
+        const id = await data
+        return id
+      }
     )
     .catch(
-      response => debugDDResponse(response)
+      response => response
     )
 }

@@ -35,7 +35,7 @@ const Categories = ({ maxCategoryLength }) => {
     category.length > 0 && setShowInputError(false)
   }
 
-  const addCategory = (event) => {
+  const addCategory = async (event) => {
     if (newCategory === '') {
       setShowInputError(true);
       return;
@@ -46,7 +46,10 @@ const Categories = ({ maxCategoryLength }) => {
       return;
     }
     
-    create({ name: newCategory, color: colorSelected })
+    const id = await create({ name: newCategory, color: colorSelected })
+
+    
+    console.log(id)
   }
  
   return ( 
