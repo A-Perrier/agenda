@@ -20,10 +20,13 @@ const Categories = ({ maxCategoryLength }) => {
   const [colorSelected, setColorSelected] = useState(null)
   const [showColorError, setShowColorError] = useState(null)
 
+  const [checkedCategories, setCheckedCategories] = useState([])
+
   const fetchCategories = async () => {
     try {
       const categories = await findAll();
       setCategories(categories);
+      setCheckedCategories(categories)
     } catch (error) {
       console.log(error)
     }
@@ -34,7 +37,7 @@ const Categories = ({ maxCategoryLength }) => {
   }, [])
 
 
-  const onNewCategoryInteraction = () => setIsInputActive(!isInputActive)
+  const onNewCategoryInteraction = () => setIsInputActive(!isInputActive);
 
   const handleInputChange = ({ currentTarget }) => {
     const category = currentTarget.value;
@@ -66,7 +69,15 @@ const Categories = ({ maxCategoryLength }) => {
 
     console.log(id)
   }
+
+  const handleCategorySelect = (category) => checkedCategories.push(category);
+
+  const handleCategoryUnselect = (category) => {
+    const index = checkedCategories.indexOf(category);
+    index !== -1 && checkedCategories.splice(index, 1)
+  }
  
+
   return ( 
     <div className="categories-container">
       <h1>
@@ -91,9 +102,10 @@ const Categories = ({ maxCategoryLength }) => {
           </div>
         }
         <div className="categories-list">
+          
         {
           categories.map(category =>
-            <Category id={category.id} name={category.name} color={category.color} isSelected/>
+            <Category data={category} onSelect={handleCategorySelect} onUnselect={handleCategoryUnselect} />
           )
         }
         </div>

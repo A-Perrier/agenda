@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Category = ({id, name, color, isSelected}) => {
+const Category = ({data, onSelect, onUnselect}) => {
+  const { id, name, color } = data
+  const [isSelected, setIsSelected] = useState(true)
+
+  const handleSelect = () => {
+    setIsSelected(!isSelected)
+    !isSelected === true ? onSelect(data) : onUnselect(data)
+  }
 
   return ( 
     <div className="category" index={id}>
       <p>
-        <span className={`checkbox ${isSelected ? 'selected' : ''}`} style={{backgroundColor: color}}></span>
+        <span className={`checkbox ${isSelected ? 'selected' : ''}`} style={{backgroundColor: color}} onClick={handleSelect}></span>
         { name }
       </p>
     </div>
