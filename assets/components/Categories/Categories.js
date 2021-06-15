@@ -6,7 +6,7 @@ import Counter from '../Globals/Counter';
 import ColorPicker from './ColorPicker';
 import { findAll, create } from '../../services/Api/Categories';
 import { errorMessage } from '../../shared/utils';
-import Category from './Category';
+import Category, { CategoryToggler } from './Category';
 
 
 
@@ -77,13 +77,25 @@ const Categories = ({ maxCategoryLength }) => {
   }
 
 
-  const handleCategorySelect = (category) => checkedCategories.push(category);
+  const handleCategorySelect = (category) => {
+    const copy = checkedCategories.slice()
+    copy.push(category)
+    setCheckedCategories(copy)
+  }
 
 
   const handleCategoryUnselect = (category) => {
-    const index = checkedCategories.indexOf(category);
-    index !== -1 && checkedCategories.splice(index, 1)
+    const copy = checkedCategories.slice()
+    const index = copy.indexOf(category)
+    index !== -1 && copy.splice(index, 1)
+    setCheckedCategories(copy)
   }
+
+
+  const handleCategoryTogglerSelect = () => setCheckedCategories(categories)
+
+
+  const handleCategoryTogglerUnselect = () => setCheckedCategories([])
   
 
   return ( 
@@ -110,10 +122,10 @@ const Categories = ({ maxCategoryLength }) => {
           </div>
         }
         <div className="categories-list">
-          
+          <CategoryToggler name="Tout cocher" onSelect={handleCategoryTogglerSelect} onUnselect={handleCategoryTogglerUnselect}/>
         {
           categories.map(category =>
-            <Category data={category} onSelect={handleCategorySelect} onUnselect={handleCategoryUnselect} />
+            <Category data={category} onSelect={handleCategorySelect} onUnselect={handleCategoryUnselect} isSelected={checkedCategories.includes(category)}/>
           )
         }
         </div>
