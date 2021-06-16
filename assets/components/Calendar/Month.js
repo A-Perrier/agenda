@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import MonthNavigation from './MonthNavigation';
 import Weekdays from './Weekdays';
 import Weeks from './Weeks';
@@ -19,7 +19,6 @@ import Cache from '../../services/Cache';
 
 
 
-
 class Month extends Component {
   state = {
     monthNumber: actualMonth(),
@@ -37,6 +36,7 @@ class Month extends Component {
     firstDayOfNextMonth: firstDayOfNextMonth(actualMonth(), actualYear()),
     lastDayOfNextMonth: lastDayOfNextMonth(actualMonth(), actualYear())
   };
+
 
   handlePrevMonth () {
     const { monthNumber } = this.state;
@@ -157,6 +157,7 @@ class Month extends Component {
             firstDayOfMonth={firstDayOfMonth}
             daysInPrevMonth={daysInPrevMonth}
             monthName={monthName}
+            year={year}
             goToPrevMonth={() => this.removeMonth()}
             goToPrevYear={() => this.removeYear()}
             goToNextMonth={() => this.addMonth()}

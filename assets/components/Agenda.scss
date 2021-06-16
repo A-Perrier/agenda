@@ -78,6 +78,22 @@
 
         &__prev-month, &__next-month { color: $disable-color; }
         
+        &.today {
+            color: white;
+
+            &::after { 
+                position: absolute;
+                content: " ";
+                height: 2rem;
+                width: 2rem;
+                background-color: $success;
+                bottom: 50%;
+                z-index: -1;
+                left: 50%;
+                transform: translate(-50%, 50%);
+                border-radius: 50%;
+             } 
+        }
 
         &:hover {
 

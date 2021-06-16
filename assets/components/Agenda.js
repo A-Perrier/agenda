@@ -9,15 +9,14 @@ import '../bootstrap';
 import Calendar from './Calendar/Calendar';
 import Categories from './Categories/Categories';
 
-
-
 const Agenda = () => {
 
   return (
-  <div className="agenda-container">
-    <Calendar />
-    <Categories maxCategoryLength="40" />
-  </div>);
+    <div className="agenda-container">
+      <Calendar />
+      <Categories maxCategoryLength="40" />
+    </div>
+  )
 }
 
 const agenda = document.querySelector('#agenda');

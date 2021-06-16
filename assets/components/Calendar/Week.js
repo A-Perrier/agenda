@@ -11,7 +11,8 @@ const Week = ({
   goToPrevYear,
   goToNextMonth,
   goToNextYear,
-  monthName }) => {
+  monthName,
+  year }) => {
 
   const days = [];
 
@@ -22,6 +23,7 @@ const Week = ({
       <Day 
         key={`day-${j}`} 
         monthName={monthName} 
+        year={year}
         className="day day__prev-month"
         goToPrevMonth={goToPrevMonth}
         goToPrevYear={goToPrevYear}
@@ -37,6 +39,7 @@ const Week = ({
       <Day 
         key={`day-${k}`} 
         monthName={monthName} 
+        year={year}
         className="day"
         >
         {children}
@@ -61,6 +64,7 @@ const Week = ({
         <Day 
           key={`day-${i}`} 
           monthName={monthName} 
+          year={year}
           className="day day__next-month" 
           goToNextMonth={goToNextMonth}
           goToNextYear={goToNextYear}
@@ -74,6 +78,7 @@ const Week = ({
           <Day 
             key={`day-${i}`} 
             monthName={monthName} 
+            year={year}
             className="day day__next-month" 
             goToNextMonth={goToNextMonth}
             goToNextYear={goToNextYear}
@@ -87,6 +92,7 @@ const Week = ({
           <Day 
             key={`day-${i}`} 
             monthName={monthName} 
+            year={year}
             className="day">{children}
           </Day>)
         }

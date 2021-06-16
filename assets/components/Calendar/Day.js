@@ -1,4 +1,5 @@
 import React from 'react';
+import { actualMonth, actualYear } from '../../shared/utils';
 
 const Day = ({ 
   children, 
@@ -7,7 +8,15 @@ const Day = ({
   goToPrevYear,
   goToNextMonth, 
   goToNextYear, 
-  monthName }) => {
+  monthName,
+  year }) => {
+
+  if (
+      actualYear() === year &&
+      actualMonth('fullname') === monthName && 
+      (new Date()).getDate() === children
+    ) 
+  className += ' today'
 
   const isPrevMonth = className.includes('prev-month')
   const isNextMonth = className.includes('next-month')

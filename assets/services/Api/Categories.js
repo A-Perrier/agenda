@@ -45,7 +45,7 @@ export const create = (data) => {
     )
 }
 
-/////// ON DOIT ALLER CREER UNE METHODE DANS LE CONTROLLER QUI VA INTERCEPTER LA DEMANDE
+
 export const remove = (data) => {
   return axios
     .delete(`${CATEGORY_ENTRYPOINT}/${data.id}`)

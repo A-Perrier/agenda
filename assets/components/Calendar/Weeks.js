@@ -7,6 +7,7 @@ const Weeks = ({
   daysInPrevMonth, 
   firstDayOfMonth, 
   monthName,
+  year,
   goToPrevMonth,
   goToPrevYear,
   goToNextMonth, 
@@ -30,6 +31,7 @@ const Weeks = ({
         start={start} 
         end={end} 
         monthName={monthName} 
+        year={year}
         daysInPrevMonth={daysInPrevMonth} 
         daysInMonth={null}
         goToPrevMonth={goToPrevMonth}
@@ -56,6 +58,7 @@ const Weeks = ({
           start={start} 
           end={end} 
           monthName={monthName} 
+          year={year}
           daysInPrevMonth={null} 
           daysInMonth={daysInMonth} 
           isNextMonth={true}
@@ -68,6 +71,7 @@ const Weeks = ({
           start={start} 
           end={end} 
           monthName={monthName} 
+          year={year}
           daysInPrevMonth={null} 
           daysInMonth={daysInMonth}
           goToNextMonth={goToNextMonth} 
