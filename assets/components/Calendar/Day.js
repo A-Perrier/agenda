@@ -12,9 +12,9 @@ const Day = ({
   year }) => {
 
   if (
+      (new Date()).getDate() === children &&
       actualYear() === year &&
-      actualMonth('fullname') === monthName && 
-      (new Date()).getDate() === children
+      actualMonth('fullname') === monthName
     ) 
   className += ' today'
 
