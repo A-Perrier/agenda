@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import CSS from '../../const';
+import { Bin } from '../../shared/svg';
 
-const Category = ({ data, onSelect, onUnselect, isSelected }) => {
+const Category = ({ data, onSelect, onUnselect, isSelected, onDelete }) => {
   const { id, name, color } = data
 
   const handleSelect = () => {
@@ -13,6 +14,7 @@ const Category = ({ data, onSelect, onUnselect, isSelected }) => {
       <p>
         <span className={`icon checkbox ${isSelected ? 'selected' : ''}`} style={{backgroundColor: color}} onClick={handleSelect}></span>
         { name }
+        <Bin onClick={() => onDelete(data)}/>
       </p>
     </div>
    );

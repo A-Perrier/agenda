@@ -105,7 +105,7 @@ const actualMonth = (type = null) => {
   
   if (currentMonth === null) {
     currentMonth = (new Date()).getMonth() + 1;
-    Cache.set('currentMonth', currentMonth);
+    Cache.set('currentMonth', currentMonth)
   }
  
   return type !== null ? formatMonth(currentMonth, type) : currentMonth
@@ -129,9 +129,9 @@ const actualYear = () => {
  */
 const formatMonth = (monthNumber, type = null) => {
   if (!+monthNumber || +monthNumber < 1 || +monthNumber > 12) 
-    throw new Error(`formatMonth attend en premier paramètre un entier de 1 à 12`);
+    throw new Error(`formatMonth attend en premier paramètre un entier de 1 à 12`)
   if (type && (type !== 'digit' && type !== 'fullname' && type !== 'abbr')) 
-    throw new Error(`formatMonth attend en paramètre "digit", "abbr" ou "fullname"`);
+    throw new Error(`formatMonth attend en paramètre "digit", "abbr" ou "fullname"`)
 
   return type !== null ? months[+monthNumber][type] : monthNumber
 }
@@ -156,7 +156,7 @@ const daysInNextMonth = (monthNumber, year) => {
 
 const firstDayOfMonth = (monthNumber, year) => {
   // We need to say monthNumber - 1 because Date constructor is searching for month index, which is starting from 0
-  const firstDay = new Date(+year, +monthNumber - 1, 1).toLocaleDateString('fr-FR', { weekday: 'long' });
+  const firstDay = new Date(+year, +monthNumber - 1, 1).toLocaleDateString('fr-FR', { weekday: 'long' })
   return capitalize(firstDay);
 }
 
@@ -195,6 +195,18 @@ const errorMessage = message =>
     { message }
   </p>
 
+/**
+ * Makes a copy of the original array, remove Item in parameter from it, then returns the copy
+ * @param {Array} array 
+ * @param {Object} item 
+ */
+const removeFromArray = (array, item) => {
+  const copy = array.slice()
+  const index = copy.indexOf(item)
+  index !== -1 && copy.splice(index, 1)
+  return copy;
+}
+
 export {
   months,
   days,
@@ -210,5 +222,6 @@ export {
   lastDayOfMonth,
   lastDayOfPrevMonth,
   lastDayOfNextMonth,
-  errorMessage
+  errorMessage,
+  removeFromArray
 }

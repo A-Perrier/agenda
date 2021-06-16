@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Category
 {
     public const CREATE_EVENT = 'category.create';
+    public const DELETE_EVENT = 'category.delete';
 
     /**
      * @ORM\Id

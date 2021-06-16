@@ -4,15 +4,15 @@ import { PlusIcon } from '../../shared/svg';
 import CSS from '../../const';
 import Counter from '../Globals/Counter';
 import ColorPicker from './ColorPicker';
-import { findAll, create } from '../../services/Api/Categories';
-import { errorMessage } from '../../shared/utils';
+import { findAll, create, remove } from '../../services/Api/Categories';
+import { errorMessage, removeFromArray } from '../../shared/utils';
 import Category, { CategoryToggler } from './Category';
 
 
 
 const Categories = ({ maxCategoryLength }) => {
   const [limitInputText, setLimitInputText] = useState(maxCategoryLength)
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([])
 
   const [newCategory, setNewCategory] = useState('')
   const [showInputError, setShowInputError] = useState(null)
@@ -24,8 +24,8 @@ const Categories = ({ maxCategoryLength }) => {
   const [checkedCategories, setCheckedCategories] = useState([])
 
   const fetchCategories = async () => {
-    const categories = await findAll();
-    setCategories(categories);
+    const categories = await findAll()
+    setCategories(categories)
     setCheckedCategories(categories)
   }
 
@@ -35,17 +35,17 @@ const Categories = ({ maxCategoryLength }) => {
   }, [])
 
 
-  const onNewCategoryInteraction = () => setIsInputActive(!isInputActive);
+  const onNewCategoryInteraction = () => setIsInputActive(!isInputActive)
 
 
   const handleInputChange = ({ currentTarget }) => {
-    const category = currentTarget.value;
+    const category = currentTarget.value
 
     // Prévient du dépassement de la limite avec un CTRL+V
     if (category.length > maxCategoryLength) {
-      setNewCategory(category.substr(0, maxCategoryLength));
+      setNewCategory(category.substr(0, maxCategoryLength))
       setLimitInputText(0)
-      return;
+      return
     }
 
     setNewCategory(category)
@@ -56,26 +56,40 @@ const Categories = ({ maxCategoryLength }) => {
 
   const addCategory = async (event) => {
     if (newCategory === '') {
-      setShowInputError(true);
-      return;
+      setShowInputError(true)
+      return
     }
 
     if (colorSelected === null) {
-      setShowColorError(true);
-      return;
+      setShowColorError(true)
+      return
     }
 
-    const id = await create({ name: newCategory, color: colorSelected });
-    const category = {id, name: newCategory, color: colorSelected};
+    const id = await create({ name: newCategory, color: colorSelected })
+    const category = {id, name: newCategory, color: colorSelected}
 
-    const copy = categories.slice();
-    copy.push(category);
-    setCategories(copy);
-    checkedCategories.push(category);
+    const copy = categories.slice()
+    copy.push(category)
+    setCategories(copy)
+    checkedCategories.push(category)
 
-    setNewCategory('');
+    setNewCategory('')
   }
 
+  const deleteCategory = async (category) => {
+    const result = confirm("Voulez-vous vraiment supprimer la catégorie et tous les événements qui y sont associés ?")
+    if (!result) return
+
+    const statusCode = await remove(category)
+    
+    if (statusCode === 200) {
+      const categoriesFiltered = removeFromArray(categories, category)
+      setCategories(categoriesFiltered)
+      
+      const checkedCategoriesFiltered = removeFromArray(checkedCategories, category)
+      setCheckedCategories(checkedCategoriesFiltered)
+    }
+  }
 
   const handleCategorySelect = (category) => {
     const copy = checkedCategories.slice()
@@ -85,9 +99,7 @@ const Categories = ({ maxCategoryLength }) => {
 
 
   const handleCategoryUnselect = (category) => {
-    const copy = checkedCategories.slice()
-    const index = copy.indexOf(category)
-    index !== -1 && copy.splice(index, 1)
+    const copy = removeFromArray(checkedCategories, category)
     setCheckedCategories(copy)
   }
 
@@ -125,13 +137,19 @@ const Categories = ({ maxCategoryLength }) => {
           <CategoryToggler name="Tout cocher" onSelect={handleCategoryTogglerSelect} onUnselect={handleCategoryTogglerUnselect}/>
         {
           categories.map(category =>
-            <Category data={category} onSelect={handleCategorySelect} onUnselect={handleCategoryUnselect} isSelected={checkedCategories.includes(category)}/>
+            <Category 
+              data={category} 
+              onSelect={handleCategorySelect}
+              onUnselect={handleCategoryUnselect} 
+              isSelected={checkedCategories.includes(category)}
+              onDelete={deleteCategory}
+              />
           )
         }
         </div>
       </section>
     </div>
-  );
+  )
 }
  
 export default Categories;

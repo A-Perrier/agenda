@@ -46,6 +46,12 @@
       
       &.selected::before { @include check(38%, 24%, .8rem) }
     }
+
+    .bin { 
+      margin-left: 0.5rem; 
+      transform: translateY(10%);
+      display: inline-block;
+    }
   }
 }
 
