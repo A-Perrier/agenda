@@ -45,8 +45,8 @@ const Weeks = ({
         daysRemainingInMonth -= end
       }
 
-      // Si la dernière semaine n'a QUE des jours trop bas pour faire partie de ce mois-ci
-      if (i >= 5 && start < 20 && end < 20) {
+      // Si les deux dernières semaines n'ont QUE des jours trop bas pour faire partie de ce mois-ci
+      if (i >= 4 && start < 20 && end < 20) {
         weeks.push(<Week 
           key={'week' + i} 
           start={start} 

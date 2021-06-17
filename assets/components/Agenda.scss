@@ -6,6 +6,7 @@
 }
 
 .calendar {
+
     header {
         display: flex;
         justify-content: space-between;
@@ -112,5 +113,27 @@
                 border-radius: 8px;
              } 
         }
+    }
+}
+
+.day-event-box {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: 90vw;
+    //height: 80vh;
+    background-color: white;
+    border: 1px solid hsl(213, 49%, 31%, .5);
+    
+    .icon {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+        margin: 1rem 0 0 1rem;
     }
 }

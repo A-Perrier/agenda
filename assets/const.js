@@ -11,4 +11,5 @@ export default class CSS {
   static get danger ()              { return "#EE6F6F" };
   static get ctaColor ()            { return "#EC800D" };
   static get shadow ()              { return "0 1px 4px black" };
+  static rem (int)                  { return int * 16 };
 }

@@ -1,21 +1,30 @@
 import React, { createRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-
-// any CSS you import will output into a single css file (app.css in this case)
 import './Agenda.scss';
-
-// start the Stimulus application
 import '../bootstrap';
 import Calendar from './Calendar/Calendar';
 import Categories from './Categories/Categories';
 
+
+
+export const DaySelectedContext = React.createContext({
+  daySelected: null, setDaySelected: () => {}
+})
+
+
 const Agenda = () => {
+  const [daySelected, setDaySelected] = useState(null)
+  const value = { daySelected, setDaySelected }
+
+  console.log(value)
 
   return (
-    <div className="agenda-container">
-      <Calendar />
-      <Categories maxCategoryLength="40" />
-    </div>
+    <DaySelectedContext.Provider value={value}>
+      <div className="agenda-container">
+        <Calendar />
+        <Categories maxCategoryLength="40" />
+      </div>
+    </DaySelectedContext.Provider>
   )
 }
 

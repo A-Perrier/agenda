@@ -1,12 +1,48 @@
-import React, { useState } from 'react';
-import { actualMonth, actualYear } from '../../shared/utils';
+import React, { useContext, useState } from 'react';
+import { indexOfMonth, actualMonth, actualYear, formatMonth } from '../../shared/utils';
+import DayEventBox from './DayEventBox';
+import { DaySelectedContext } from '../Agenda'
 
 const Day = ({ 
   children, 
   className,
   monthName,
   year }) => {
-    
+
+  const { daySelected, setDaySelected } = useContext(DaySelectedContext)
+  const [YPos, setYPos] = useState(null)
+  const [divInfo, setDivInfo] = useState('')
+
+  const isPrevMonth = className.includes('prev-month')
+  const isNextMonth = className.includes('next-month')
+  const viewMonthNameIndex = indexOfMonth(monthName) // L'index du mois de l'affichage
+  let targetMonthIndex = viewMonthNameIndex // L'index du mois qui prend en compte les mois précédents et suivants
+  let targetYear = year // L'année, prennant en compte les mois précédents et suivants
+
+  const setTargetMonthIndex = () => {
+    if (isPrevMonth) {
+      if (viewMonthNameIndex === 1) {
+        targetMonthIndex = 12
+        targetYear -= 1
+        return
+      } else {
+        targetMonthIndex -= 1
+      }
+    } else if (isNextMonth) {
+      if (viewMonthNameIndex === 12) {
+        targetMonthIndex = 1
+        targetYear += 1
+      } else {
+        targetMonthIndex += 1
+      }
+    }
+  }
+  setTargetMonthIndex()
+
+  const fullDate = `${children} ${formatMonth(targetMonthIndex, 'fullname')} ${targetYear}`
+  const numericDate = `${children}/${formatMonth(targetMonthIndex, 'digit')}/${targetYear}` 
+
+  // On récupère la date du jour pour lui donner une class CSS spéciale
   if (
       (new Date()).getDate() === children &&
       actualYear() === year &&
@@ -14,25 +50,28 @@ const Day = ({
     ) 
   className += ' today'
 
-  const removeSelection = () => {
+  const makeSelection = (el) => {
     const selected = document.querySelector('.day.selected')
     if (selected) selected.classList.remove('selected')
-  }
-
-  const handleSelection = (el) => {
-    removeSelection()
     el.classList.add('selected')
   }
 
-  const isPrevMonth = className.includes('prev-month')
-  const isNextMonth = className.includes('next-month')
+  const handleClick = (e) => {
+    makeSelection(e.currentTarget)
+    setDivInfo(e.currentTarget)
+    setDaySelected(e.currentTarget)
+    setYPos(e.clientY)
+  }
 
-  const handleClick = (e) => handleSelection(e.currentTarget)
-
-  return ( 
+  return (
+    <>
     <div className={className} onClick={(e) => handleClick(e)}>
       { children }
     </div>
+    { divInfo === daySelected && 
+      <DayEventBox fullDate={fullDate} numericDate={numericDate} YPos={YPos}/>
+      }
+    </>
    );
 }
  

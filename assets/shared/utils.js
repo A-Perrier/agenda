@@ -96,6 +96,21 @@ const days = {
 }
 
 /**
+ * From a month name, returns the index of it based on the month list
+ * @param {String} monthName 
+ */
+const indexOfMonth = (monthName) => {
+  let index
+  Object.entries(months)
+        .find(([key, monthObject]) => {
+          if (monthObject.fullname === monthName) index = key
+        }
+  )
+
+  return +index
+}
+
+/**
  * Returns the actual month at this moment.
  * If type === null, returns only the Integer corresponding to the month
  * @param {String|null} type 'digit' || 'abbr' || 'fullname' 
@@ -215,6 +230,7 @@ const getSelected = (selector, innerText) => {
 export {
   months,
   days,
+  indexOfMonth,
   actualMonth,
   actualYear,
   formatMonth,
