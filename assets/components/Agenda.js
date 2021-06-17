@@ -16,8 +16,6 @@ const Agenda = () => {
   const [daySelected, setDaySelected] = useState(null)
   const value = { daySelected, setDaySelected }
 
-  console.log(value)
-
   return (
     <DaySelectedContext.Provider value={value}>
       <div className="agenda-container">
