@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class CategoryController extends AbstractController
@@ -70,14 +71,14 @@ class CategoryController extends AbstractController
         !$id
       )
         throw new Exception("Aucune action possible à cet endroit", HTTP::BAD_REQUEST);
-
+      
     $category = $this->categoryRepository->find($id);
 
     if (!$category) return $this->json("Merci de ne pas altérer les données", HTTP::NOT_FOUND);
 
     $event = new CategoryDeleteEvent($category);
     $this->dispatcher->dispatch($event, Category::DELETE_EVENT);
-
+  
     return $this->json(HTTP::OK, HTTP::OK);
   }
 

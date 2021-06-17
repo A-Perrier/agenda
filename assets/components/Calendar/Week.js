@@ -7,10 +7,6 @@ const Week = ({
   daysInPrevMonth, 
   daysInMonth, 
   isNextMonth, 
-  goToPrevMonth,
-  goToPrevYear,
-  goToNextMonth,
-  goToNextYear,
   monthName,
   year }) => {
 
@@ -25,8 +21,6 @@ const Week = ({
         monthName={monthName} 
         year={year}
         className="day day__prev-month"
-        goToPrevMonth={goToPrevMonth}
-        goToPrevYear={goToPrevYear}
         >
         {daysInPrevMonth - daysBeforeStartingMonth + 1 + j}
       </Day>)
@@ -65,9 +59,7 @@ const Week = ({
           key={`day-${i}`} 
           monthName={monthName} 
           year={year}
-          className="day day__next-month" 
-          goToNextMonth={goToNextMonth}
-          goToNextYear={goToNextYear}
+          className="day day__next-month"
           >
           {children}
         </Day>)
@@ -79,9 +71,7 @@ const Week = ({
             key={`day-${i}`} 
             monthName={monthName} 
             year={year}
-            className="day day__next-month" 
-            goToNextMonth={goToNextMonth}
-            goToNextYear={goToNextYear}
+            className="day day__next-month"
             >
             {children}
           </Day>)
@@ -93,7 +83,9 @@ const Week = ({
             key={`day-${i}`} 
             monthName={monthName} 
             year={year}
-            className="day">{children}
+            className="day"
+            >
+            {children}
           </Day>)
         }
       }

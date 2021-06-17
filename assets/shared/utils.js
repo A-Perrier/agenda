@@ -207,6 +207,11 @@ const removeFromArray = (array, item) => {
   return copy;
 }
 
+const getSelected = (selector, innerText) => {
+  return Array.from(document.querySelectorAll(selector))
+              .find(el => el.textContent === innerText);
+}
+
 export {
   months,
   days,
@@ -223,5 +228,6 @@ export {
   lastDayOfPrevMonth,
   lastDayOfNextMonth,
   errorMessage,
-  removeFromArray
+  removeFromArray,
+  getSelected
 }

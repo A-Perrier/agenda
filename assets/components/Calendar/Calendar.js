@@ -3,7 +3,7 @@ import Month from './Month';
 
 const Calendar = () => {
   return ( 
-    <div className="calendar">
+    <div className="calendar" >
       <Month />
     </div>
    );

@@ -158,10 +158,6 @@ class Month extends Component {
             daysInPrevMonth={daysInPrevMonth}
             monthName={monthName}
             year={year}
-            goToPrevMonth={() => this.removeMonth()}
-            goToPrevYear={() => this.removeYear()}
-            goToNextMonth={() => this.addMonth()}
-            goToNextYear={() => this.addYear()}
           />
         </div>
      );

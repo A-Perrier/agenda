@@ -1,16 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { actualMonth, actualYear } from '../../shared/utils';
 
 const Day = ({ 
   children, 
-  className, 
-  goToPrevMonth,
-  goToPrevYear,
-  goToNextMonth, 
-  goToNextYear, 
+  className,
   monthName,
   year }) => {
-
+    
   if (
       (new Date()).getDate() === children &&
       actualYear() === year &&
@@ -18,18 +14,23 @@ const Day = ({
     ) 
   className += ' today'
 
+  const removeSelection = () => {
+    const selected = document.querySelector('.day.selected')
+    if (selected) selected.classList.remove('selected')
+  }
+
+  const handleSelection = (el) => {
+    removeSelection()
+    el.classList.add('selected')
+  }
+
   const isPrevMonth = className.includes('prev-month')
   const isNextMonth = className.includes('next-month')
 
-  const actionToUse = () => {
-    if (!isPrevMonth && !isNextMonth) return;
-
-    if (isPrevMonth) return monthName === 'Janvier' ? goToPrevYear : goToPrevMonth;
-    if (isNextMonth) return monthName === 'Décembre' ? goToNextYear : goToNextMonth;
-  }
+  const handleClick = (e) => handleSelection(e.currentTarget)
 
   return ( 
-    <div className={className} onClick={actionToUse()}>
+    <div className={className} onClick={(e) => handleClick(e)}>
       { children }
     </div>
    );

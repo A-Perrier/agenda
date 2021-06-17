@@ -7,11 +7,7 @@ const Weeks = ({
   daysInPrevMonth, 
   firstDayOfMonth, 
   monthName,
-  year,
-  goToPrevMonth,
-  goToPrevYear,
-  goToNextMonth, 
-  goToNextYear }) => {
+  year }) => {
 
   const weeks = [];
   for (let i = 0; i < 6; i++) {
@@ -34,8 +30,6 @@ const Weeks = ({
         year={year}
         daysInPrevMonth={daysInPrevMonth} 
         daysInMonth={null}
-        goToPrevMonth={goToPrevMonth}
-        goToPrevYear={goToPrevYear}
          />);
 
     } else if (i > 0 && i < 6) {
@@ -62,8 +56,6 @@ const Weeks = ({
           daysInPrevMonth={null} 
           daysInMonth={daysInMonth} 
           isNextMonth={true}
-          goToNextMonth={goToNextMonth} 
-          goToNextYear={goToNextYear}
           />);
       } else {
         weeks.push(<Week 
@@ -74,8 +66,6 @@ const Weeks = ({
           year={year}
           daysInPrevMonth={null} 
           daysInMonth={daysInMonth}
-          goToNextMonth={goToNextMonth} 
-          goToNextYear={goToNextYear}
           />);
       }
       
