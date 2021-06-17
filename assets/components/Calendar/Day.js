@@ -59,8 +59,11 @@ const Day = ({
   const handleClick = (e) => {
     makeSelection(e.currentTarget)
     setDivInfo(e.currentTarget)
-    setDaySelected(e.currentTarget)
-    setYPos(e.clientY)
+
+    if (e.currentTarget !== daySelected) {
+      setDaySelected(e.currentTarget)
+      setYPos(e.clientY)
+    }
   }
 
   return (
