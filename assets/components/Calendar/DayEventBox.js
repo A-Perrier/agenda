@@ -37,11 +37,22 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
   function handleEventCategory (event) {
     setEventCategory(event.target.value)
   }
+  
+  function handleClose () {
+    setDaySelected(null)
+    const selected = document.querySelector('.day.selected.event-box-opened')
+    if (selected) selected.classList.remove('event-box-opened')
+  }
 
+  function addAgendaEvent (event) {
+    event.preventDefault()
+
+    // Envoyer la requête AJAX
+  }
 
   return ( 
-    <div className="day-event-box" style={{ top: `${YPos + CSS.rem(1.5)}px` }}>
-      <Cross onClick={() => setDaySelected(null)} />
+    <div className="day-event-box" style={{ top: `${YPos + CSS.rem(2.5)}px` }}>
+      <Cross onClick={handleClose} />
       <h1>
         <strong>{ fullDate }</strong>
       </h1>
@@ -51,7 +62,7 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
           Créer un évènement
           <PlusIcon onClick={onNewEventInteraction} />
         </p> :
-        <form className="day-event-box__create-form">
+        <form className="day-event-box__create-form" onSubmit={addAgendaEvent}>
           <input type="time" min="00:00" max="23:00" step="300" value={eventTime} onChange={handleEventTime} />
           &nbsp; - &nbsp;
           <input type="text" placeholder="Ajoutez un évènement" value={eventName} onChange={handleEventName} />

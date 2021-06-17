@@ -48,7 +48,7 @@ const Day = ({
       actualYear() === year &&
       actualMonth('fullname') === monthName
     ) 
-  className += ' today'
+  className += ' today';
 
   const makeSelection = (el) => {
     const selected = document.querySelector('.day.selected')
@@ -59,6 +59,7 @@ const Day = ({
   const handleClick = (e) => {
     makeSelection(e.currentTarget)
     setDivInfo(e.currentTarget)
+    e.currentTarget.classList.add('event-box-opened')
 
     if (e.currentTarget !== daySelected) {
       setDaySelected(e.currentTarget)
