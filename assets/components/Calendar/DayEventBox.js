@@ -5,10 +5,11 @@ import CSS from '../../const'
 import { findAll as findAllCategories} from '../../services/Api/Categories'
 import { findAllByDate } from '../../services/Api/Events'
 import { create } from '../../services/Api/Events'
+import Event from './Event';
 
 const DayEventBox = ({ fullDate, numericDate, YPos }) => {
   const { daySelected, setDaySelected } = useContext(DaySelectedContext)
-  const [isCreationActive, setIsCreationActive] = useState(true)
+  const [isCreationActive, setIsCreationActive] = useState(false)
   const [eventTime, setEventTime] = useState('00:00')
   const [eventName, setEventName] = useState('')
   const [eventCategory, setEventCategory] = useState('')
@@ -71,29 +72,44 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
   return ( 
     <div className="day-event-box" style={{ top: `${YPos + CSS.rem(2.5)}px` }}>
       <Cross onClick={handleClose} />
-      <h1>
-        <strong>{ fullDate }</strong>
-      </h1>
-      {
-        !isCreationActive ?
-        <p>
-          Créer un évènement
-          <PlusIcon onClick={onNewEventInteraction} />
-        </p> :
-        <form className="day-event-box__create-form" onSubmit={addAgendaEvent}>
-          <input type="time" min="00:00" max="23:00" step="300" value={eventTime} onChange={handleEventTime} />
-          &nbsp; - &nbsp;
-          <input type="text" placeholder="Ajoutez un évènement" value={eventName} onChange={handleEventName} />
-          <select value={eventCategory} onChange={handleEventCategory}>
-            {
-              categories.map(category => 
-              <option key={category} value={category.name}>{category.name}</option>
-              )
-            }
-          </select>
-          <button className="btn btn-submit" type="submit">Créer</button>
-        </form>
-      }
+      <section>
+        <h1>
+          <strong>{ fullDate }</strong>
+        </h1>
+        {
+          !isCreationActive ?
+          <p>
+            Créer un évènement
+            <PlusIcon onClick={onNewEventInteraction} />
+          </p> :
+          <form className="day-event-box__create-form" onSubmit={addAgendaEvent}>
+            <input type="time" min="00:00" max="23:00" step="300" value={eventTime} onChange={handleEventTime} />
+            &nbsp; - &nbsp;
+            <input type="text" placeholder="Ajoutez un évènement" value={eventName} onChange={handleEventName} />
+            <select value={eventCategory} onChange={handleEventCategory}>
+              {
+                categories.map(category => 
+                <option key={category} value={category.name}>{category.name}</option>
+                )
+              }
+            </select>
+            <button className="btn btn-submit" type="submit">Créer</button>
+          </form>
+          
+        }
+      </section>
+      <section className="day-event-box__events">
+        <h1>
+          <strong>Evènements</strong>
+        </h1>
+        {
+          dateEvents.length > 0 ?
+          dateEvents.map(event => 
+            <Event key={event} data={event} />
+          ) :
+          <p>Il n'y a pas encore d'évènement</p>
+        }
+      </section>
     </div>
    );
 }
