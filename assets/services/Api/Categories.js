@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { CATEGORY_ENTRYPOINT } from '../../config';
+import { CATEGORY_ENDPOINT } from '../../config';
 import { debugDDResponse } from '../Debug';
 import Cache from '../Cache';
 import { dangerToast } from '../Toast';
@@ -15,7 +15,7 @@ export const findAll = async () => {
   if (cachedCategories) return cachedCategories
 
   return axios
-    .get(CATEGORY_ENTRYPOINT)
+    .get(CATEGORY_ENDPOINT)
     .then(
       ({ data }) => {
         const categories = JSON.parse(data)
@@ -27,7 +27,7 @@ export const findAll = async () => {
 
 export const create = (data) => {
   return axios
-    .post(CATEGORY_ENTRYPOINT, data)
+    .post(CATEGORY_ENDPOINT, data)
     .then(
       async ({ data }) => {
         const id = await data
@@ -48,7 +48,7 @@ export const create = (data) => {
 
 export const remove = (data) => {
   return axios
-    .delete(`${CATEGORY_ENTRYPOINT}/${data.id}`)
+    .delete(`${CATEGORY_ENDPOINT}/${data.id}`)
     .then(
       async (response) => {
         const status = await response.data
