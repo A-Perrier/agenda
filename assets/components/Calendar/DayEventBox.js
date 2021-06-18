@@ -3,6 +3,7 @@ import { Cross, PlusIcon } from '../../shared/svg';
 import { DaySelectedContext } from '../Agenda'
 import CSS from '../../const'
 import { findAll } from '../../services/Api/Categories'
+import { create } from '../../services/Api/Events'
 
 const DayEventBox = ({ fullDate, numericDate, YPos }) => {
   const { daySelected, setDaySelected } = useContext(DaySelectedContext)
@@ -47,8 +48,12 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
 
   function addAgendaEvent (event) {
     event.preventDefault()
-
-    // Envoyer la requête AJAX
+    
+    create({
+      time: eventTime,
+      name: eventName,
+      category: eventCategory
+    })
   }
 
   return ( 
