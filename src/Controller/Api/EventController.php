@@ -53,7 +53,8 @@ class EventController extends AbstractController
 
     $event = new AgendaEventCreateEvent($agendaEvent);
     $this->dispatcher->dispatch($event, AgendaEvent::CREATE_EVENT);
-    
+
+    if (isset($agendaEvent->errors)) return $this->json($agendaEvent->errors, Response::HTTP_BAD_REQUEST);
     return $this->json($agendaEvent->getId(), Response::HTTP_OK);
   }
 }

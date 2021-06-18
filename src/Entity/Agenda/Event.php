@@ -4,6 +4,7 @@ namespace App\Entity\Agenda;
 
 use App\Repository\Agenda\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
@@ -22,11 +23,13 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="3", minMessage="Le nom de l'évènement ne peut faire moins de {{ limit }} caractères")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez indiquer une heure !")
      */
     private $time;
 

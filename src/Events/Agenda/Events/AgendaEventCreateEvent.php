@@ -2,9 +2,10 @@
 namespace App\Events\Agenda\Events;
 
 use App\Entity\Agenda\Event as AgendaEvent;
+use App\Interfaces\EventInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class AgendaEventCreateEvent extends Event
+class AgendaEventCreateEvent extends Event implements EventInterface
 {
   private $agenda_event;
 
