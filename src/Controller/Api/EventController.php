@@ -58,4 +58,20 @@ class EventController extends AbstractController
     if (isset($agendaEvent->errors)) return $this->json($agendaEvent->errors, Response::HTTP_BAD_REQUEST);
     return $this->json($agendaEvent->getId(), Response::HTTP_OK);
   }
+
+
+  /**
+   * @Route("/api/events/{date<([0-9]{2}-){2}[0-9]{4}>}", name="api/event_getByDate", methods={"GET"})
+   */
+  public function findAllByDate(Request $request, $date)
+  {
+    if (!$request->isXmlHttpRequest() || !$request->isMethod('GET')) throw new Exception("Aucune action possible à cet endroit", Response::HTTP_BAD_REQUEST);
+    
+    $events = $this->eventRepository->findBy(['date' => $date]);
+    
+    return $this->json(
+      $this->serializer->serialize($events, 'json', ['groups' => 'event:fetch']),
+      Response::HTTP_OK
+    );
+  }
 }

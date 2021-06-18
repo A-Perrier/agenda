@@ -27,14 +27,14 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"category:fetch"})
+     * @Groups({"category:fetch", "event:fetch"})
      * @Assert\NotBlank(message="La catégorie doit avoir un nom")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=7)
-     * @Groups({"category:fetch"})
+     * @Groups({"category:fetch", "event:fetch"})
      * @Assert\NotNull(message="La catégorie doit être associée à une couleur")
      */
     private $color;

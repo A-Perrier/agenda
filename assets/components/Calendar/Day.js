@@ -40,7 +40,7 @@ const Day = ({
   setTargetMonthIndex()
 
   const fullDate = `${children} ${formatMonth(targetMonthIndex, 'fullname')} ${targetYear}`
-  const numericDate = `${children}/${formatMonth(targetMonthIndex, 'digit')}/${targetYear}` 
+  const numericDate = `${children}-${formatMonth(targetMonthIndex, 'digit')}-${targetYear}` 
 
   // On récupère la date du jour pour lui donner une class CSS spéciale
   if (

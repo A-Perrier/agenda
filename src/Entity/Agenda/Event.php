@@ -2,8 +2,9 @@
 
 namespace App\Entity\Agenda;
 
-use App\Repository\Agenda\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\Agenda\EventRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -18,24 +19,28 @@ class Event
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"event:fetch"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="3", minMessage="Le nom de l'évènement ne peut faire moins de {{ limit }} caractères")
+     * @Groups({"event:fetch"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Vous devez indiquer une heure !")
+     * @Groups({"event:fetch"})
      */
     private $time;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"event:fetch"})
      */
     private $category;
 

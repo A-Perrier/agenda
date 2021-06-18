@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Cross, PlusIcon } from '../../shared/svg';
 import { DaySelectedContext } from '../Agenda'
 import CSS from '../../const'
-import { findAll } from '../../services/Api/Categories'
+import { findAll as findAllCategories} from '../../services/Api/Categories'
+import { findAllByDate } from '../../services/Api/Events'
 import { create } from '../../services/Api/Events'
 
 const DayEventBox = ({ fullDate, numericDate, YPos }) => {
@@ -12,16 +13,24 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
   const [eventName, setEventName] = useState('')
   const [eventCategory, setEventCategory] = useState('')
   const [categories, setCategories] = useState([])
+  const [dateEvents, setDateEvents] = useState([])
 
   async function fetchCategories () {
-    const categories = await findAll()
+    const categories = await findAllCategories()
     setCategories(categories)
+    setEventCategory(categories[0]?.name)
+  }
+
+  async function fetchEvents () {
+    const events = await findAllByDate(numericDate)
+    setDateEvents(events)
   }
 
   useEffect(() => {
+    fetchEvents()
     fetchCategories()
-    setEventCategory(categories[0]?.name)
-  }, [categories])
+  }, [])
+  
 
   function onNewEventInteraction () {
     setIsCreationActive(true)
@@ -29,7 +38,6 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
 
   function handleEventTime (event) {
     setEventTime(event.target.value)
-    console.log(eventTime)
   }
 
   function handleEventName (event) {
@@ -46,6 +54,7 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
     if (selected) selected.classList.remove('event-box-opened')
   }
 
+
   async function addAgendaEvent (event) {
     event.preventDefault()
     
@@ -55,9 +64,9 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
       category: eventCategory,
       date: numericDate
     })
-
-    console.log(id)
   }
+
+  console.log(dateEvents)
 
   return ( 
     <div className="day-event-box" style={{ top: `${YPos + CSS.rem(2.5)}px` }}>
