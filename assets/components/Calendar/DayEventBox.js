@@ -59,12 +59,16 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
   async function addAgendaEvent (event) {
     event.preventDefault()
     
-    const id = await create({
+    const agendaEvent = await create({
       time: eventTime,
       name: eventName,
       category: eventCategory,
       date: numericDate
     })
+
+    const copy = dateEvents.slice()
+    copy.push(agendaEvent)
+    setDateEvents(copy)
   }
 
   console.log(dateEvents)

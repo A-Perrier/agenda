@@ -56,7 +56,9 @@ class EventController extends AbstractController
     $this->dispatcher->dispatch($event, AgendaEvent::CREATE_EVENT);
 
     if (isset($agendaEvent->errors)) return $this->json($agendaEvent->errors, Response::HTTP_BAD_REQUEST);
-    return $this->json($agendaEvent->getId(), Response::HTTP_OK);
+    return $this->json(
+      $this->serializer->serialize($agendaEvent, 'json', ['groups' => 'event:fetch']), 
+      Response::HTTP_OK);
   }
 
 
@@ -67,7 +69,7 @@ class EventController extends AbstractController
   {
     if (!$request->isXmlHttpRequest() || !$request->isMethod('GET')) throw new Exception("Aucune action possible à cet endroit", Response::HTTP_BAD_REQUEST);
     
-    $events = $this->eventRepository->findBy(['date' => $date]);
+    $events = $this->eventRepository->findBy(['date' => $date], ['time' => 'ASC']);
     
     return $this->json(
       $this->serializer->serialize($events, 'json', ['groups' => 'event:fetch']),
