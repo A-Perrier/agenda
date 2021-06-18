@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Event
 {
+
+    public const CREATE_EVENT = 'agenda_event.create';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

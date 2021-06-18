@@ -46,14 +46,16 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
     if (selected) selected.classList.remove('event-box-opened')
   }
 
-  function addAgendaEvent (event) {
+  async function addAgendaEvent (event) {
     event.preventDefault()
     
-    create({
+    const id = await create({
       time: eventTime,
       name: eventName,
       category: eventCategory
     })
+
+    console.log(id)
   }
 
   return ( 

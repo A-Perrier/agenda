@@ -14,9 +14,9 @@ export const create = (data) => {
     .post(EVENT_ENDPOINT, data)
     .then(
       async ({ data }) => {
-        debugDDResponse(data)
-        //const id = await data
-        //return id
+        //debugDDResponse(data)
+        const id = await data
+        return id
       }
     )
     .catch(
