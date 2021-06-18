@@ -52,7 +52,8 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
     const id = await create({
       time: eventTime,
       name: eventName,
-      category: eventCategory
+      category: eventCategory,
+      date: numericDate
     })
 
     console.log(id)

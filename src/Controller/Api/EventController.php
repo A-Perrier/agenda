@@ -49,6 +49,7 @@ class EventController extends AbstractController
     $agendaEvent->setCategory($category)
                 ->setName($data['name'])
                 ->setTime($data['time'])
+                ->setDate($data['date'])
     ;
 
     $event = new AgendaEventCreateEvent($agendaEvent);
