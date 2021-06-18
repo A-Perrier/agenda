@@ -35,29 +35,29 @@ class CategoryController extends AbstractController
    * @Route("/api/categories", name="api/category_create", methods={"POST"})
    */
   public function create(Request $request) {
-    if (!$request->isXmlHttpRequest() || !$request->isMethod('POST')) throw new Exception("Aucune action possible à cet endroit", HTTP::BAD_REQUEST);
+    if (!$request->isXmlHttpRequest() || !$request->isMethod('POST')) throw new Exception("Aucune action possible à cet endroit", Response::HTTP_BAD_REQUEST);
 
     $category = $this->serializer->deserialize($request->getContent(), Category::class, 'json');
 
     $event = new CategoryCreateEvent($category);
     $this->dispatcher->dispatch($event, Category::CREATE_EVENT);
     
-    if (isset($category->errors)) return $this->json($category->errors, HTTP::BAD_REQUEST);
+    if (isset($category->errors)) return $this->json($category->errors, Response::HTTP_BAD_REQUEST);
 
-    return $this->json($category->getId(), HTTP::CREATED);
+    return $this->json($category->getId(), Response::HTTP_CREATED);
   }
 
   /**
    * @Route("/api/categories", name="api/category_findAll", methods={"GET"})
    */
   public function findAll(Request $request) {
-    if (!$request->isXmlHttpRequest() || !$request->isMethod('GET')) throw new Exception("Aucune action possible à cet endroit", HTTP::BAD_REQUEST);
+    if (!$request->isXmlHttpRequest() || !$request->isMethod('GET')) throw new Exception("Aucune action possible à cet endroit", Response::HTTP_BAD_REQUEST);
 
     $categories = $this->categoryRepository->findAll();
 
     return $this->json(
       $this->serializer->serialize($categories, 'json', ['groups' => 'category:fetch']), 
-      HTTP::OK
+      Response::HTTP_OK
     );
   }
 
@@ -70,16 +70,16 @@ class CategoryController extends AbstractController
         !$request->isMethod('DELETE') ||
         !$id
       )
-        throw new Exception("Aucune action possible à cet endroit", HTTP::BAD_REQUEST);
+        throw new Exception("Aucune action possible à cet endroit", Response::HTTP_BAD_REQUEST);
       
     $category = $this->categoryRepository->find($id);
 
-    if (!$category) return $this->json("Merci de ne pas altérer les données", HTTP::NOT_FOUND);
+    if (!$category) return $this->json("Merci de ne pas altérer les données", Response::HTTP_NOT_FOUND);
 
     $event = new CategoryDeleteEvent($category);
     $this->dispatcher->dispatch($event, Category::DELETE_EVENT);
   
-    return $this->json(HTTP::OK, HTTP::OK);
+    return $this->json(Response::HTTP_OK, Response::HTTP_OK);
   }
 
 }
