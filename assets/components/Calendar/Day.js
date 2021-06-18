@@ -73,7 +73,7 @@ const Day = ({
       { children }
     </div>
     { divInfo === daySelected && 
-      <DayEventBox fullDate={fullDate} numericDate={numericDate} YPos={YPos}/>
+      <DayEventBox key={numericDate} fullDate={fullDate} numericDate={numericDate} YPos={YPos}/>
       }
     </>
    );

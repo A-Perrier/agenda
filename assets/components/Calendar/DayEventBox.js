@@ -28,6 +28,7 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
 
   function handleEventTime (event) {
     setEventTime(event.target.value)
+    console.log(eventTime)
   }
 
   function handleEventName (event) {
