@@ -1,6 +1,7 @@
 import React from 'react';
+import { Bin } from '../../shared/svg';
 
-const Event = ({ data }) => {
+const Event = ({ data, onDelete }) => {
 
   return ( 
     <p className="event">
@@ -9,6 +10,8 @@ const Event = ({ data }) => {
         {data.time} - &nbsp;
       </strong>
       {data.name}
+      &nbsp;
+      <Bin onClick={() => onDelete(data)}/>
     </p>
   );
 }

@@ -3,10 +3,11 @@ import { Cross, PlusIcon } from '../../shared/svg';
 import { DaySelectedContext } from '../Agenda'
 import CSS from '../../const'
 import { findAll as findAllCategories} from '../../services/Api/Categories'
-import { create } from '../../services/Api/Events'
+import { create, remove } from '../../services/Api/Events'
 import Event from './Event';
+import { removeFromArray } from '../../shared/utils';
 
-const DayEventBox = ({ fullDate, numericDate, YPos, onEventCreate, events }) => {
+const DayEventBox = ({ fullDate, numericDate, YPos, onEventCreate, events, afterEventDeleted }) => {
   const { daySelected, setDaySelected } = useContext(DaySelectedContext)
   const [isCreationActive, setIsCreationActive] = useState(false)
   const [eventTime, setEventTime] = useState('00:00')
@@ -65,6 +66,17 @@ const DayEventBox = ({ fullDate, numericDate, YPos, onEventCreate, events }) => 
     onEventCreate(agendaEvent.category.color)
   }
 
+  async function deleteEvent (event) {
+    const statusCode = await remove(event)
+    
+    if (statusCode === 200) {
+      const eventsFiltered = removeFromArray(dateEvents, event)
+      setDateEvents(eventsFiltered)
+      afterEventDeleted(eventsFiltered)
+    }
+
+  }
+
 
   return ( 
     <div className="day-event-box" style={{ top: `${YPos + CSS.rem(2.5)}px` }}>
@@ -102,7 +114,7 @@ const DayEventBox = ({ fullDate, numericDate, YPos, onEventCreate, events }) => 
         {
           dateEvents.length > 0 ?
           dateEvents.map(event => 
-            <Event key={event} data={event} />
+            <Event key={event} data={event} onDelete={deleteEvent}/>
           ) :
           <p>Il n'y a pas encore d'évènement</p>
         }

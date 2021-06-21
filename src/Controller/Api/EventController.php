@@ -1,14 +1,15 @@
 <?php
 namespace App\Controller\Api;
 
-use App\Entity\Agenda\Event as AgendaEvent;
-use App\Events\Agenda\Events\AgendaEventCreateEvent;
-use App\Repository\Agenda\CategoryRepository;
 use Exception;
 use App\Repository\Agenda\EventRepository;
+use App\Entity\Agenda\Event as AgendaEvent;
+use App\Repository\Agenda\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Events\Agenda\Events\AgendaEventCreateEvent;
+use App\Events\Agenda\Events\AgendaEventDeleteEvent;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -91,5 +92,26 @@ class EventController extends AbstractController
       $this->serializer->serialize($events, 'json', ['groups' => 'event:fetch']),
       Response::HTTP_OK
     );
+  }
+
+
+  /**
+   * @Route("/api/events/{id<\d+>}", name="api/event_delete", methods={"DELETE"})
+   */
+  public function delete(Request $request, int $id) {
+    if (
+        !$request->isXmlHttpRequest() || 
+        !$request->isMethod('DELETE') ||
+        !$id
+      )
+        throw new Exception("Aucune action possible à cet endroit", Response::HTTP_BAD_REQUEST);
+      
+    $event = $this->eventRepository->find($id);
+    if (!$event) return $this->json("Merci de ne pas altérer les données", Response::HTTP_NOT_FOUND);
+
+    $event = new AgendaEventDeleteEvent($event);
+    $this->dispatcher->dispatch($event, AgendaEvent::DELETE_EVENT);
+  
+    return $this->json(Response::HTTP_OK, Response::HTTP_OK);
   }
 }

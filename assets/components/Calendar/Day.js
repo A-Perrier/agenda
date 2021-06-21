@@ -55,11 +55,11 @@ const Day = ({
     ) 
   className += ' today';
 
-  useEffect(() => {
+  //useEffect(() => {
     // On vide les dropColors pour éviter leur persistance en changeant de mois
     // Si on place cette ligne ici, on supprime plus tôt, mais on supprime aussi sur le clic d'un jour
     //dropColors.splice(0, dropColors.length)
-  })
+  //})
 
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const Day = ({
       dateEvent.date === numericDate && events.push(dateEvent)
     })
     setCurrentDateEvents(events)
-    dropColors.splice(0, dropColors.length)
+
     // Puis on set les dropColors
     events.map(event => {
       if (!dropColors.includes(event.category.color)) dropColors.push(event.category.color)
@@ -103,6 +103,14 @@ const Day = ({
       setDropColors(copy)
     }
   }
+
+  function afterEventDeleted (events) {
+    setCurrentDateEvents(events)
+    dropColors.splice(0, dropColors.length)
+    events.map(event => {
+      if (!dropColors.includes(event.category.color)) dropColors.push(event.category.color)
+    })
+  }
   
   return (
     <>
@@ -117,7 +125,7 @@ const Day = ({
       </div>
     </div>
     { divInfo === daySelected && 
-      <DayEventBox key={numericDate} fullDate={fullDate} numericDate={numericDate} YPos={YPos} onEventCreate={onEventCreate} events={currentDateEvents} />
+      <DayEventBox key={numericDate} fullDate={fullDate} numericDate={numericDate} YPos={YPos} onEventCreate={onEventCreate} events={currentDateEvents} afterEventDeleted={afterEventDeleted}/>
       }
     </>
    );

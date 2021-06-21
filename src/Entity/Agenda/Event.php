@@ -14,6 +14,7 @@ class Event
 {
 
     public const CREATE_EVENT = 'agenda_event.create';
+    public const DELETE_EVENT = 'agenda_event.delete';
 
     /**
      * @ORM\Id

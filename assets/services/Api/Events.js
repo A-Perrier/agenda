@@ -35,7 +35,7 @@ export const findAll = async () => {
     .then(
       ({ data }) => {
         const events = JSON.parse(data)
-        events.map(event => Cache.set(`${cacheKey}/${event.date}`, event))
+        Cache.set(`${cacheKey}`, events)
         return events
       }
     )
@@ -57,6 +57,24 @@ export const create = (data) => {
           dangerToast(message)
         }
         return response.data
+      }
+    )
+}
+
+
+export const remove = (data) => {
+  return axios
+    .delete(`${EVENT_ENDPOINT}/${data.id}`)
+    .then(
+      async (response) => {
+        const status = await response.data
+        return status
+      }
+    )
+    .catch(
+      ({ response }) => {
+        const { data } = response
+        dangerToast(data)
       }
     )
 }
