@@ -1,10 +1,10 @@
 import React from 'react';
 import Month from './Month';
 
-const Calendar = () => {
+const Calendar = ({ onMonthChange }) => {
   return ( 
     <div className="calendar" >
-      <Month />
+      <Month onMonthChange={onMonthChange} />
     </div>
    );
 }

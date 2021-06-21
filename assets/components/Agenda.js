@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './Agenda.scss';
 import '../bootstrap';
@@ -36,7 +36,7 @@ const Agenda = () => {
     <DateEventsContext.Provider value={events}>
       <DaySelectedContext.Provider value={value}>
         <div className="agenda-container">
-          <Calendar />
+          <Calendar onMonthChange={fetchEvents} />
           <Categories maxCategoryLength="40" />
         </div>
       </DaySelectedContext.Provider>

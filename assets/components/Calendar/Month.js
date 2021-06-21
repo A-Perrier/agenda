@@ -41,11 +41,13 @@ class Month extends Component {
   handlePrevMonth () {
     const { monthNumber } = this.state;
     monthNumber > 1 ? this.removeMonth() : this.removeYear()
+    this.props.onMonthChange()
   }
 
   handleNextMonth () {
     const { monthNumber } = this.state;
     monthNumber < 12 ? this.addMonth() : this.addYear()
+    this.props.onMonthChange()
   }
 
   addMonth () {

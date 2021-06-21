@@ -57,6 +57,7 @@ const Day = ({
 
 
   useEffect(() => {
+    while (dropColors.length > 0 ) dropColors.pop()
     // A partir de la liste de tous les dateEvents, on trie pour récupérer ceux qui concernent le jour courant
     const events = [] 
     dateEvents.map(dateEvent => {
@@ -98,7 +99,7 @@ const Day = ({
   
   return (
     <>
-    <div className={className} onClick={(e) => handleClick(e)}>
+    <div className={className} onClick={(e) => handleClick(e)} >
       { children }
       <div className="drops">
         {

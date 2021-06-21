@@ -35,7 +35,7 @@ export const findAll = async () => {
     .then(
       ({ data }) => {
         const events = JSON.parse(data)
-        Cache.set(`${cacheKey}`, events)
+        events.map(event => Cache.set(`${cacheKey}/${event.date}`, event))
         return events
       }
     )
