@@ -3,18 +3,17 @@ import { Cross, PlusIcon } from '../../shared/svg';
 import { DaySelectedContext } from '../Agenda'
 import CSS from '../../const'
 import { findAll as findAllCategories} from '../../services/Api/Categories'
-import { findAllByDate } from '../../services/Api/Events'
 import { create } from '../../services/Api/Events'
 import Event from './Event';
 
-const DayEventBox = ({ fullDate, numericDate, YPos }) => {
+const DayEventBox = ({ fullDate, numericDate, YPos, onEventCreate, events }) => {
   const { daySelected, setDaySelected } = useContext(DaySelectedContext)
   const [isCreationActive, setIsCreationActive] = useState(false)
   const [eventTime, setEventTime] = useState('00:00')
   const [eventName, setEventName] = useState('')
   const [eventCategory, setEventCategory] = useState('')
   const [categories, setCategories] = useState([])
-  const [dateEvents, setDateEvents] = useState([])
+  const [dateEvents, setDateEvents] = useState(events)
 
   async function fetchCategories () {
     const categories = await findAllCategories()
@@ -22,13 +21,7 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
     setEventCategory(categories[0]?.name)
   }
 
-  async function fetchEvents () {
-    const events = await findAllByDate(numericDate)
-    setDateEvents(events)
-  }
-
   useEffect(() => {
-    fetchEvents()
     fetchCategories()
   }, [])
   
@@ -69,9 +62,9 @@ const DayEventBox = ({ fullDate, numericDate, YPos }) => {
     const copy = dateEvents.slice()
     copy.push(agendaEvent)
     setDateEvents(copy)
+    onEventCreate(agendaEvent.category.color)
   }
 
-  console.log(dateEvents)
 
   return ( 
     <div className="day-event-box" style={{ top: `${YPos + CSS.rem(2.5)}px` }}>

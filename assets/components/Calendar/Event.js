@@ -2,7 +2,6 @@ import React from 'react';
 
 const Event = ({ data }) => {
 
-  console.log(data)
   return ( 
     <p className="event">
       <span className="event__category-color" style={{backgroundColor: data.category.color}}></span>

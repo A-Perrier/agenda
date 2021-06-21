@@ -25,6 +25,22 @@ export const findAllByDate = async (numericDate) => {
     )
 }
 
+export const findAll = async () => {
+  const cachedEvents = await Cache.get(`${cacheKey}`)
+
+  if (cachedEvents) return cachedEvents
+
+  return axios
+    .get(`${EVENT_ENDPOINT}`)
+    .then(
+      ({ data }) => {
+        const events = JSON.parse(data)
+        Cache.set(`${cacheKey}`, events)
+        return events
+      }
+    )
+}
+
 export const create = (data) => {
   return axios
     .post(EVENT_ENDPOINT, data)

@@ -46,6 +46,7 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"event:fetch"})
      */
     private $date;
 

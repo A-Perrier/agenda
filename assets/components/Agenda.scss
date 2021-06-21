@@ -126,6 +126,22 @@
             transform: translateX(-50%);
             left: 50%;
         }
+
+        .drops {
+            position: absolute;
+            display: flex;
+            left: 50%;
+            transform: translate(-50%, 41%);
+
+            .drop {
+                position: relative;
+                height: 8px;
+                width: 4px;
+                margin-left: .2rem;
+                border-radius: 18px;
+            }
+        }
+        
     }
 }
 
