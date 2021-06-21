@@ -55,16 +55,23 @@ const Day = ({
     ) 
   className += ' today';
 
+  useEffect(() => {
+    // On vide les dropColors pour éviter leur persistance en changeant de mois
+    // Si on place cette ligne ici, on supprime plus tôt, mais on supprime aussi sur le clic d'un jour
+    //dropColors.splice(0, dropColors.length)
+  })
+
 
   useEffect(() => {
-    while (dropColors.length > 0 ) dropColors.pop()
-    // A partir de la liste de tous les dateEvents, on trie pour récupérer ceux qui concernent le jour courant
+    // Si on place cette ligne ici, les jours se vident avec une latence
+    dropColors.splice(0, dropColors.length)
+
     const events = [] 
     dateEvents.map(dateEvent => {
       dateEvent.date === numericDate && events.push(dateEvent)
     })
     setCurrentDateEvents(events)
-
+    dropColors.splice(0, dropColors.length)
     // Puis on set les dropColors
     events.map(event => {
       if (!dropColors.includes(event.category.color)) dropColors.push(event.category.color)
