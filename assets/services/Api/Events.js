@@ -33,7 +33,7 @@ export const findAllUntil = async (numericDate) => {
     .then(
       ({ data }) => {
         const events = JSON.parse(data)
-        Cache.set(`${cacheKey}/${numericDate}`, events)
+        Cache.set(`${cacheKey}/until/${numericDate}`, events)
         return events
       }
     )

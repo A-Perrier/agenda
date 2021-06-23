@@ -21,4 +21,15 @@ class Dates
   
     return new DateTime("{$year}-{$month}-{$day}");
   }
+
+
+  public function frFormatToEng (string $date): string
+  {
+    $exploded = explode('-', $date);
+    $day = $exploded[0];
+    $month = $exploded[1];
+    $year = $exploded[2];
+  
+    return "{$year}-{$month}-{$day}";
+  }
 }

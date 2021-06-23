@@ -12,6 +12,7 @@ const NextEvents = ({ limit }) => {
   async function fetchEvents () {
     const events = await findAllUntil(limitDate)
     setEvents(events)
+    console.log(events)
   }
 
   useEffect(() => {

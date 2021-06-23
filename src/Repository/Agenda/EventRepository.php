@@ -3,6 +3,8 @@
 namespace App\Repository\Agenda;
 
 use App\Entity\Agenda\Event;
+use App\Service\Dates;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +19,24 @@ class EventRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Event::class);
+    }
+
+
+    public function findFromNowUntil(string $limit, array $orderBy = [])
+    {
+        $now = (new DateTime())->format('Y-m-d');
+
+        $order_key = array_key_first($orderBy);
+        $order_dir = $orderBy[$order_key];
+
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.date BETWEEN :from AND :to')
+            ->setParameter('from', $now)
+            ->setParameter('to', $limit)
+            ->orderBy('e.'.$order_key, $order_dir)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     // /**
