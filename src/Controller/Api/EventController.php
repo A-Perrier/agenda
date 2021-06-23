@@ -83,7 +83,7 @@ class EventController extends AbstractController
   }
 
 
-    /**
+  /**
    * @Route("/api/events/until/{date<[0-9]{1,2}-[0-9]{2}-[0-9]{4}>}", name="api/event_getUntil", methods={"GET"})
    */
   public function findAllUntil(Request $request, $date)

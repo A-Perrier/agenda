@@ -27,6 +27,8 @@ class CategoryDeleteSubscriber implements EventSubscriberInterface
   public function process(CategoryDeleteEvent $event)
   {
     $category = $event->getCategory();
+
+    foreach ($category->getEvents() as $event) $this->em->remove($event);
     
     $this->em->remove($category);
     $this->em->flush();

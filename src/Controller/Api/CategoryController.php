@@ -73,7 +73,6 @@ class CategoryController extends AbstractController
         throw new Exception("Aucune action possible à cet endroit", Response::HTTP_BAD_REQUEST);
       
     $category = $this->categoryRepository->find($id);
-
     if (!$category) return $this->json("Merci de ne pas altérer les données", Response::HTTP_NOT_FOUND);
 
     $event = new CategoryDeleteEvent($category);
