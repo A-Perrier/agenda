@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { findAllUntil } from '../../services/Api/Events';
 import { actualDate, getFormattedDate } from '../../shared/utils';
 
 const NextEvents = ({ limit }) => {
@@ -11,7 +12,6 @@ const NextEvents = ({ limit }) => {
   async function fetchEvents () {
     const events = await findAllUntil(limitDate)
     setEvents(events)
-    console.log(events)
   }
 
   useEffect(() => {

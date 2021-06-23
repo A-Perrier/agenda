@@ -80,11 +80,6 @@ const Day = ({
     el.classList.add('selected')
   }
 
-  // SUR UN CHANGEMENT DE MOIS
-  // Peut-être ici faire une function qui :
-  // 1. Annule setDivInfo
-  // 2. Retire la selection
-
   function handleClick (e) {
     makeSelection(e.currentTarget)
     setDivInfo(e.currentTarget)

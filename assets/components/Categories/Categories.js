@@ -138,6 +138,7 @@ const Categories = ({ maxCategoryLength }) => {
         {
           categories.map(category =>
             <Category 
+              key={category.id}
               data={category} 
               onSelect={handleCategorySelect}
               onUnselect={handleCategoryUnselect} 

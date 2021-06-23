@@ -99,8 +99,8 @@ const DayEventBox = ({ fullDate, numericDate, YPos, onEventCreate, events, after
               <input type="text" placeholder="Ajoutez un évènement" value={eventName} onChange={handleEventName} />
               <select value={eventCategory} onChange={handleEventCategory}>
                 {
-                  categories.map(category => 
-                  <option key={category} value={category.name}>{category.name}</option>
+                  categories.map((category, i) => 
+                  <option key={i} value={category.name}>{category.name}</option>
                   )
                 }
               </select>

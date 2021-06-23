@@ -2,6 +2,7 @@
 
 namespace App\Entity\Agenda;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\Agenda\EventRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -46,7 +47,7 @@ class Event
     private $category;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="date")
      * @Groups({"event:fetch"})
      */
     private $date;
@@ -92,12 +93,16 @@ class Event
         return $this;
     }
 
-    public function getDate(): ?string
+
+    public function getDate(): string
     {
-        return $this->date;
+        $formatted = $this->date->format('d-m-Y');
+        // Si le jour de la date formattée commence par un 0, on le supprime pour coller avec le format en Javascript
+        $formatted = preg_replace('/^[0]/', '', $formatted);
+        return $formatted;
     }
 
-    public function setDate(string $date): self
+    public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
 
