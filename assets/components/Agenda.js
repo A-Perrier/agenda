@@ -5,6 +5,7 @@ import '../bootstrap';
 import Calendar from './Calendar/Calendar';
 import Categories from './Categories/Categories';
 import { findAll } from '../services/Api/Events'
+import NextEvents from './AgendaEvents/NextEvents';
 
 
 
@@ -24,7 +25,9 @@ const Agenda = () => {
   const events = { dateEvents, setDateEvents }
 
   async function fetchEvents () {
+    // On réinitialise le tableau pour permettre l'instantanéité du chargement
     const events = await findAll()
+    setDateEvents([])
     setDateEvents(events)
   }
 
@@ -33,14 +36,15 @@ const Agenda = () => {
   }, [])
 
   return (
-    <DateEventsContext.Provider value={events}>
-      <DaySelectedContext.Provider value={value}>
-        <div className="agenda-container">
-          <Calendar onMonthChange={fetchEvents} />
-          <Categories maxCategoryLength="40" />
-        </div>
-      </DaySelectedContext.Provider>
-    </DateEventsContext.Provider>
+    <div className="agenda-container">
+      <DateEventsContext.Provider value={events}>
+        <DaySelectedContext.Provider value={value}>
+            <Calendar onMonthChange={fetchEvents} />
+            <Categories maxCategoryLength="40" />
+        </DaySelectedContext.Provider>
+      </DateEventsContext.Provider>
+      <NextEvents limit={7} />
+    </div>
   )
 }
 

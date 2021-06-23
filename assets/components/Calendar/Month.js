@@ -15,7 +15,6 @@ import {
   lastDayOfMonth,
   lastDayOfPrevMonth,
   lastDayOfNextMonth } from '../../shared/utils';
-import Cache from '../../services/Cache';
 
 
 
@@ -34,7 +33,7 @@ class Month extends Component {
 
     daysInNextMonth: daysInNextMonth(actualMonth(), actualYear()),
     firstDayOfNextMonth: firstDayOfNextMonth(actualMonth(), actualYear()),
-    lastDayOfNextMonth: lastDayOfNextMonth(actualMonth(), actualYear())
+    lastDayOfNextMonth: lastDayOfNextMonth(actualMonth(), actualYear()),
   };
 
 
@@ -51,7 +50,6 @@ class Month extends Component {
   }
 
   addMonth () {
-    Cache.erase()
     const { monthNumber, year } = this.state
     this.setState({ 
       monthNumber: monthNumber + 1, 
@@ -71,7 +69,6 @@ class Month extends Component {
   }
 
   removeMonth () {
-    Cache.erase()
     const { monthNumber, year } = this.state
     this.setState({ 
       monthNumber: monthNumber - 1, 
@@ -91,7 +88,6 @@ class Month extends Component {
   }
 
   addYear () {
-    Cache.erase()
     const { year } = this.state;
     this.setState({ 
       year: year + 1, 
@@ -112,7 +108,6 @@ class Month extends Component {
   }
 
   removeYear () {
-    Cache.erase()
     const { year } = this.state;
     this.setState({ 
       year: year - 1, 

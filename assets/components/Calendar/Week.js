@@ -18,29 +18,27 @@ const Week = ({
       days.push(
       <Day 
         key={`day-${j}`} 
+        dayInt={daysInPrevMonth - daysBeforeStartingMonth + 1 + j}
         monthName={monthName} 
         year={year}
         className="day day__prev-month"
-        >
-        {daysInPrevMonth - daysBeforeStartingMonth + 1 + j}
-      </Day>)
+        />)
     }
 
-    let children = 1;
+    let dayInt = 1;
     while (days.length < 7) {
       let k = days.length;
       days.push(
       <Day 
         key={`day-${k}`} 
+        dayInt={dayInt}
         monthName={monthName} 
         year={year}
         className="day"
-        >
-        {children}
-      </Day>)
+        />)
 
       k++;
-      children++;
+      dayInt++;
     }
   }
 
@@ -48,45 +46,42 @@ const Week = ({
     let newMonthBeginning = 1
 
     for (let i = 0; i < 7; i++) {
-      let children = start + i
+      let dayInt = start + i
 
       // Si le compteur de jour dépasse le nombre de jours contenus dans le mois on réinitialise
-      if (children > daysInMonth) {
-        children = newMonthBeginning
+      if (dayInt > daysInMonth) {
+        dayInt = newMonthBeginning
         newMonthBeginning++
         days.push(
         <Day 
           key={`day-${i}`} 
+          dayInt={dayInt}
           monthName={monthName} 
           year={year}
           className="day day__next-month"
-          >
-          {children}
-        </Day>)
+          />)
       } else {
         // Si la semaine entière provient du mois suivant on donne aux jours une classe correspondante
         if (isNextMonth) {
           days.push(
           <Day 
             key={`day-${i}`} 
+            dayInt={dayInt}
             monthName={monthName} 
             year={year}
             className="day day__next-month"
-            >
-            {children}
-          </Day>)
+            />)
 
         // Sinon on l'insère comme une semaine normale
         } else {
           days.push(
           <Day 
             key={`day-${i}`} 
+            dayInt={dayInt}
             monthName={monthName} 
             year={year}
             className="day"
-            >
-            {children}
-          </Day>)
+            />)
         }
       }
     }

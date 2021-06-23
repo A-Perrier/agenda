@@ -95,6 +95,13 @@ const days = {
   },
 }
 
+
+function getFormattedDate (dateTime, separator = '-') {
+  let date = dateTime.toLocaleDateString()
+  return date.replace(/\//g, separator)
+}
+
+
 /**
  * From a month name, returns the index of it based on the month list
  * @param {String} monthName 
@@ -134,6 +141,12 @@ const actualYear = () => {
   }
   
   return currentYear
+}
+
+const actualDate = (suitableDateTime = false) => {
+  return !suitableDateTime ? 
+    `${new Date().getDate()}-${actualMonth('digit')}-${actualYear()}` :
+    `${actualYear()}-${actualMonth('digit')}-${new Date().getDate()}`
 }
 
 /**
@@ -230,9 +243,11 @@ const getSelected = (selector, innerText) => {
 export {
   months,
   days,
+  getFormattedDate,
   indexOfMonth,
   actualMonth,
   actualYear,
+  actualDate,
   formatMonth,
   daysInMonth,
   daysInPrevMonth,

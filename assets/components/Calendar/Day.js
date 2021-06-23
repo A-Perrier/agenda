@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { indexOfMonth, actualMonth, actualYear, formatMonth } from '../../shared/utils';
-import DayEventBox from './DayEventBox';
+import DayEventBox from '../AgendaEvents/DayEventBox';
 import { DaySelectedContext } from '../Agenda'
 import { DateEventsContext } from '../Agenda'
 
 const Day = ({ 
-  children, 
+  dayInt, 
   className,
   monthName,
   year }) => {
@@ -23,6 +23,7 @@ const Day = ({
   const viewMonthNameIndex = indexOfMonth(monthName) // L'index du mois de l'affichage
   let targetMonthIndex = viewMonthNameIndex // L'index du mois qui prend en compte les mois précédents et suivants
   let targetYear = year // L'année, prennant en compte les mois précédents et suivants
+
 
   function setTargetMonthIndex () {
     if (isPrevMonth) {
@@ -44,22 +45,16 @@ const Day = ({
   }
   setTargetMonthIndex()
 
-  const fullDate = `${children} ${formatMonth(targetMonthIndex, 'fullname')} ${targetYear}`
-  const numericDate = `${children}-${formatMonth(targetMonthIndex, 'digit')}-${targetYear}` 
+  const fullDate = `${dayInt} ${formatMonth(targetMonthIndex, 'fullname')} ${targetYear}`
+  const numericDate = `${dayInt}-${formatMonth(targetMonthIndex, 'digit')}-${targetYear}` 
 
   // On récupère la date du jour pour lui donner une class CSS spéciale
   if (
-      (new Date()).getDate() === children &&
+      (new Date()).getDate() === dayInt &&
       actualYear() === year &&
       actualMonth('fullname') === monthName
     ) 
   className += ' today';
-
-  //useEffect(() => {
-    // On vide les dropColors pour éviter leur persistance en changeant de mois
-    // Si on place cette ligne ici, on supprime plus tôt, mais on supprime aussi sur le clic d'un jour
-    //dropColors.splice(0, dropColors.length)
-  //})
 
 
   useEffect(() => {
@@ -85,11 +80,17 @@ const Day = ({
     el.classList.add('selected')
   }
 
+  // SUR UN CHANGEMENT DE MOIS
+  // Peut-être ici faire une function qui :
+  // 1. Annule setDivInfo
+  // 2. Retire la selection
+
   function handleClick (e) {
     makeSelection(e.currentTarget)
     setDivInfo(e.currentTarget)
     e.currentTarget.classList.add('event-box-opened')
 
+    // On ne relance ce bloc que s'il y a un changement de sélection dans le jour choisi
     if (e.currentTarget !== daySelected) {
       setDaySelected(e.currentTarget)
       setYPos(e.clientY)
@@ -112,10 +113,16 @@ const Day = ({
     })
   }
   
+  function removeBox () {
+    setDivInfo('')
+    const boxOpened = document.querySelector('.day.selected.event-box-opened')
+    if (boxOpened) boxOpened.classList.remove('event-box-opened')
+  }
+
   return (
     <>
     <div className={className} onClick={(e) => handleClick(e)} >
-      { children }
+      { dayInt }
       <div className="drops">
         {
           dropColors.map(dropColor =>
@@ -125,7 +132,7 @@ const Day = ({
       </div>
     </div>
     { divInfo === daySelected && 
-      <DayEventBox key={numericDate} fullDate={fullDate} numericDate={numericDate} YPos={YPos} onEventCreate={onEventCreate} events={currentDateEvents} afterEventDeleted={afterEventDeleted}/>
+      <DayEventBox removeBox={removeBox} key={numericDate} fullDate={fullDate} numericDate={numericDate} YPos={YPos} onEventCreate={onEventCreate} events={currentDateEvents} afterEventDeleted={afterEventDeleted}/>
       }
     </>
    );

@@ -3,6 +3,7 @@ import { EVENT_ENDPOINT } from '../../config';
 import { debugDDResponse } from '../Debug';
 import Cache from '../Cache';
 import { dangerToast } from '../Toast';
+import { removeFromArray } from '../../shared/utils';
 
 const cacheKey = "events"
 
@@ -24,6 +25,20 @@ export const findAllByDate = async (numericDate) => {
       }
     )
 }
+
+
+export const findAllUntil = async (numericDate) => {
+  return axios
+    .get(`${EVENT_ENDPOINT}/until/${numericDate}`)
+    .then(
+      ({ data }) => {
+        const events = JSON.parse(data)
+        Cache.set(`${cacheKey}/${numericDate}`, events)
+        return events
+      }
+    )
+}
+
 
 export const findAll = async () => {
   const cachedEvents = await Cache.get(`${cacheKey}`)
@@ -47,6 +62,9 @@ export const create = (data) => {
     .then(
       async ({ data }) => {
         const event = await data
+        const allEvents = Cache.get(`${cacheKey}`)
+        allEvents.push(JSON.parse(event))
+        Cache.set(`${cacheKey}`, allEvents)
         return JSON.parse(event)
       }
     )
@@ -67,6 +85,14 @@ export const remove = (data) => {
     .delete(`${EVENT_ENDPOINT}/${data.id}`)
     .then(
       async (response) => {
+        let allEvents = Cache.get(`${cacheKey}`)
+        allEvents.map(event => {
+          if (event.id === data.id) {
+            allEvents = removeFromArray(allEvents, event)
+          }
+        })
+        Cache.set(`${cacheKey}`, allEvents)
+
         const status = await response.data
         return status
       }
