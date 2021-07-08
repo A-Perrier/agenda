@@ -52,7 +52,9 @@ const Day = ({
   if (
       (new Date()).getDate() === dayInt &&
       actualYear() === year &&
-      actualMonth('fullname') === monthName
+      actualMonth('fullname') === monthName &&
+      !className.includes('day__next-month') &&
+      !className.includes('day__prev-month')
     ) 
   className += ' today';
 

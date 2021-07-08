@@ -130,8 +130,10 @@
         .drops {
             position: absolute;
             display: flex;
-            left: 50%;
-            transform: translate(-50%, 41%);
+            left: 77%;
+            transform: translate(-76%, 41%);
+            width: 2rem;
+            justify-content: center;
 
             .drop {
                 position: relative;
@@ -229,4 +231,9 @@
     transform: translateY(16.5%);
     margin-right: 0.3rem;
     }
+}
+
+@media only screen and (min-width: $desktop-breakpoint) 
+{
+    .calendar .day .drops { left: 61%; }
 }

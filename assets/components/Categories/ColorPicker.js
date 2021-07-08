@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './ColorPicker.scss';
 
 const ColorPicker = ({ onColorSelected }) => {
-  const colors = ["#CB28E0", "#72B514", "#46BBDB", "#EB7221", "#E01563"]
+  const colors = ["#CB28E0", "#72B514", "#46BBDB", "#EB7221", "#E01563", "#E3D736"]
   const [colorSelected, setColorSelected] = useState(null)
 
   const handleSelect = (hex) => {

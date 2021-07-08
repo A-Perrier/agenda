@@ -61,11 +61,12 @@ export const create = (data) => {
     .post(EVENT_ENDPOINT, data)
     .then(
       async ({ data }) => {
-        const event = await data
+        const event = await JSON.parse(data)
         const allEvents = Cache.get(`${cacheKey}`)
-        allEvents.push(JSON.parse(event))
-        Cache.set(`${cacheKey}`, allEvents)
-        return JSON.parse(event)
+        allEvents.push(event)
+        //Cache.set(`${cacheKey}`, allEvents)
+        //Cache.set(`${cacheKey}/${event.date}`, event)
+        return event
       }
     )
     .catch(
