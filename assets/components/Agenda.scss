@@ -233,6 +233,57 @@
     }
 }
 
+.next-events { margin-top: 4rem; }
+
+.major-event {
+    &__box {
+       width: 90%;
+       margin: auto;
+       padding: 1rem;
+       border-radius: 20px;
+       position: relative;
+       margin-bottom: 3rem;
+       background-size: cover;
+       background-repeat: no-repeat;
+       background-position: center;
+    }
+
+    &__time-until {
+        display: flex;
+        width: 5rem;
+        padding: .7rem .5rem;
+        background-color: #E1E5FF;
+        position: absolute;
+        top: 0;
+        right: 1.5rem;
+        transform: translateY(-50%);
+        border-radius: 10px;
+    }
+
+    &__content {
+        width: 80%;
+        margin: auto;
+        padding: 1.5rem 0;
+    }
+
+    &__time {
+        color: $primary;
+    }
+
+    &__name {
+        padding-top: .5rem;
+        color: $primary;
+        font-size: 1.4rem;
+        font-weight: bold;
+    }
+}
+
+.minor-event {
+    &__box {
+
+    }
+}
+
 @media only screen and (min-width: $desktop-breakpoint) 
 {
     .calendar .day .drops { left: 61%; }

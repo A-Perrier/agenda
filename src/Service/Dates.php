@@ -23,6 +23,12 @@ class Dates
   }
 
 
+  /**
+   * Takes a date string in french format (e.g. 23-06-2021) and makes it suitable for a database query
+   *
+   * @param string $date
+   * @return string
+   */
   public function frFormatToEng (string $date): string
   {
     $exploded = explode('-', $date);
