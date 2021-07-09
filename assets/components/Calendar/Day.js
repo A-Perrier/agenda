@@ -2,16 +2,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { indexOfMonth, actualMonth, actualYear, formatMonth } from '../../shared/utils';
 import DayEventBox from '../AgendaEvents/DayEventBox';
 import { DaySelectedContext } from '../Agenda'
-import { DateEventsContext } from '../Agenda'
+//import { DateEventsContext } from '../Agenda'
+import { connect } from 'react-redux';
 
 const Day = ({ 
   dayInt, 
   className,
   monthName,
-  year }) => {
+  year,
+  events // from redux store
+}) => {
 
   const { daySelected, setDaySelected } = useContext(DaySelectedContext)
-  const { dateEvents, setDateEvents } = useContext(DateEventsContext)
 
   const [YPos, setYPos] = useState(null)
   const [divInfo, setDivInfo] = useState('')
@@ -63,17 +65,17 @@ const Day = ({
     // Si on place cette ligne ici, les jours se vident avec une latence
     dropColors.splice(0, dropColors.length)
 
-    const events = [] 
-    dateEvents.map(dateEvent => {
-      dateEvent.date === numericDate && events.push(dateEvent)
+    const eventsThisDay = [] 
+    events.map(event => {
+      event.date === numericDate && eventsThisDay.push(event)
     })
-    setCurrentDateEvents(events)
+    setCurrentDateEvents(eventsThisDay)
 
     // Puis on set les dropColors
-    events.map(event => {
+    eventsThisDay.map(event => {
       if (!dropColors.includes(event.category.color)) dropColors.push(event.category.color)
     })
-  }, [dateEvents])
+  }, [events])
 
 
   function makeSelection (el) {
@@ -134,5 +136,11 @@ const Day = ({
     </>
    );
 }
- 
-export default Day;
+
+const mapStateToProps = (state) => {
+  return {
+    events: state.events
+  }
+}
+
+export default connect(mapStateToProps)(Day);

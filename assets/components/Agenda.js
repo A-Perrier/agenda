@@ -12,41 +12,24 @@ import Store from '../Store/configureStore'
 
 
 
+
 export const DaySelectedContext = React.createContext({
   daySelected: null, setDaySelected: () => {}
-})
-
-export const DateEventsContext = React.createContext({
-  dateEvents: [], setDateEvents: () => {}
 })
 
 
 const Agenda = () => {
   const [daySelected, setDaySelected] = useState(null)
-  const [dateEvents, setDateEvents] = useState([])
   const value = { daySelected, setDaySelected }
-  const events = { dateEvents, setDateEvents }
 
-  async function fetchEvents () {
-    // On réinitialise le tableau pour permettre l'instantanéité du chargement
-    const events = await findAll()
-    setDateEvents([])
-    setDateEvents(events)
-  }
-
-  useEffect(() => {
-    fetchEvents()
-  }, [])
 
   return (
     <div className="agenda-container">
       <Provider store={Store}>
-        <DateEventsContext.Provider value={events}>
-          <DaySelectedContext.Provider value={value}>
-              <Calendar onMonthChange={fetchEvents} />
-              <Categories maxCategoryLength="40" />
-          </DaySelectedContext.Provider>
-        </DateEventsContext.Provider>
+        <DaySelectedContext.Provider value={value}>
+            <Calendar />
+            <Categories maxCategoryLength="40" />
+        </DaySelectedContext.Provider>
         <NextEvents limit={7} />
       </Provider>
     </div>

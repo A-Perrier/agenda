@@ -8,10 +8,11 @@ import bg5 from '../../img/daily-event_5.jpg'
 import bg6 from '../../img/daily-event_6.jpg'
 import bg7 from '../../img/daily-event_7.jpg'
 
-const MajorEvent = ({ event }) => {
+
+const MajorEvent = ({ event, eventss }) => {
   const backgrounds = [bg1, bg2, bg3, bg4, bg5, bg6, bg7]
   const randomBg = backgrounds[Math.floor(Math.random()*backgrounds.length)]
-
+  
   return ( 
     <div className="major-event__box" style={{backgroundImage: `url(${randomBg})`}}>
       <div className="major-event__time-until">
@@ -30,5 +31,6 @@ const MajorEvent = ({ event }) => {
     </div>
   );
 }
- 
+
+
 export default MajorEvent;

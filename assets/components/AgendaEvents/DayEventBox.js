@@ -60,7 +60,7 @@ const DayEventBox = ({ fullDate, numericDate, YPos, onEventCreate, events, after
       category: eventCategory,
       date: numericDate
     })
-
+    
     const copy = dateEvents.slice()
     copy.push(agendaEvent)
     setDateEvents(copy)
