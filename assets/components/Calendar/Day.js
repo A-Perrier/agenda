@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { indexOfMonth, actualMonth, actualYear, formatMonth } from '../../shared/utils';
 import DayEventBox from '../AgendaEvents/DayEventBox';
 import { DaySelectedContext } from '../Agenda'
-//import { DateEventsContext } from '../Agenda'
 import { connect } from 'react-redux';
 
 const Day = ({ 

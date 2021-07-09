@@ -40,10 +40,12 @@ export const findAllUntil = async (numericDate) => {
 }
 
 
-export const findAll = async () => {
-  const cachedEvents = await Cache.get(`${cacheKey}`)
+export const findAll = async (fromCacheWanted = true) => {
+  if (fromCacheWanted) {
+    const cachedEvents = await Cache.get(`${cacheKey}`)
+    if (cachedEvents) return cachedEvents 
+  }
 
-  if (cachedEvents) return cachedEvents
 
   return axios
     .get(`${EVENT_ENDPOINT}`)

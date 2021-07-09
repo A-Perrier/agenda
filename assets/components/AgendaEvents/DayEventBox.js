@@ -7,8 +7,19 @@ import { create, remove } from '../../services/Api/Events'
 import Event from './Event';
 import { removeFromArray } from '../../shared/utils';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { connect } from 'react-redux';
+import { EVENTS_CREATE, EVENTS_REFRESH, EVENTS_REMOVE } from '../../Store/Reducers/eventReducer';
 
-const DayEventBox = ({ fullDate, numericDate, YPos, onEventCreate, events, afterEventDeleted, removeBox }) => {
+const DayEventBox = ({ 
+  fullDate, 
+  numericDate, 
+  YPos, 
+  onEventCreate, 
+  events, 
+  afterEventDeleted, 
+  removeBox,
+  dispatch // from Redux
+}) => {
   const { daySelected, setDaySelected } = useContext(DaySelectedContext)
   const [isCreationActive, setIsCreationActive] = useState(false)
   const [eventTime, setEventTime] = useState('00:00')
@@ -23,32 +34,44 @@ const DayEventBox = ({ fullDate, numericDate, YPos, onEventCreate, events, after
     setEventCategory(categories[0]?.name)
   }
 
+
+
   useEffect(() => {
     fetchCategories()
   }, [])
   
 
+
   function onNewEventInteraction () {
     setIsCreationActive(true)
   }
+
+
 
   function handleEventTime (event) {
     setEventTime(event.target.value)
   }
 
+
+
   function handleEventName (event) {
     setEventName(event.target.value)
   }
+
+
 
   function handleEventCategory (event) {
     setEventCategory(event.target.value)
   }
   
+
+
   function handleClose () {
     setDaySelected(null)
     const selected = document.querySelector('.day.selected.event-box-opened')
     if (selected) selected.classList.remove('event-box-opened')
   }
+
 
 
   async function addAgendaEvent (event) {
@@ -65,17 +88,24 @@ const DayEventBox = ({ fullDate, numericDate, YPos, onEventCreate, events, after
     copy.push(agendaEvent)
     setDateEvents(copy)
     onEventCreate(agendaEvent.category.color)
+
+    
+    let action = { type: EVENTS_CREATE, value: agendaEvent }
+    dispatch(action)
   }
+
+
 
   async function deleteEvent (event) {
     const statusCode = await remove(event)
     
     if (statusCode === 200) {
+      const action = { type: EVENTS_REMOVE, value: event }
+      dispatch(action)
       const eventsFiltered = removeFromArray(dateEvents, event)
       setDateEvents(eventsFiltered)
       afterEventDeleted(eventsFiltered)
     }
-
   }
 
 
@@ -125,5 +155,12 @@ const DayEventBox = ({ fullDate, numericDate, YPos, onEventCreate, events, after
     </OutsideClickHandler>
    );
 }
- 
-export default DayEventBox;
+
+
+const mapStateToProps = (state) => {
+  return {
+    eventsInStore: state.events
+  }
+}
+
+export default connect(mapStateToProps)(DayEventBox);
