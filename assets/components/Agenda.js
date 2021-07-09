@@ -7,6 +7,9 @@ import Categories from './Categories/Categories';
 import { findAll } from '../services/Api/Events'
 import NextEvents from './AgendaEvents/NextEvents';
 
+import { Provider } from 'react-redux'
+import Store from '../Store/configureStore'
+
 
 
 export const DaySelectedContext = React.createContext({
@@ -37,13 +40,15 @@ const Agenda = () => {
 
   return (
     <div className="agenda-container">
-      <DateEventsContext.Provider value={events}>
-        <DaySelectedContext.Provider value={value}>
-            <Calendar onMonthChange={fetchEvents} />
-            <Categories maxCategoryLength="40" />
-        </DaySelectedContext.Provider>
-      </DateEventsContext.Provider>
-      <NextEvents limit={7} />
+      <Provider store={Store}>
+        <DateEventsContext.Provider value={events}>
+          <DaySelectedContext.Provider value={value}>
+              <Calendar onMonthChange={fetchEvents} />
+              <Categories maxCategoryLength="40" />
+          </DaySelectedContext.Provider>
+        </DateEventsContext.Provider>
+        <NextEvents limit={7} />
+      </Provider>
     </div>
   )
 }
