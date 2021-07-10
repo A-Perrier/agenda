@@ -34,6 +34,7 @@ class EventRepository extends ServiceEntityRepository
             ->setParameter('from', $now)
             ->setParameter('to', $limit)
             ->orderBy('e.'.$order_key, $order_dir)
+            ->addOrderBy('e.time', 'ASC')
             ->getQuery()
             ->getResult()
         ;

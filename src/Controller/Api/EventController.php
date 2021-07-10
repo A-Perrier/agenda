@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Events\Agenda\Events\AgendaEventCreateEvent;
 use App\Events\Agenda\Events\AgendaEventDeleteEvent;
+use App\Events\Agenda\Events\AgendaEventEditEvent;
 use App\Service\Dates;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -65,6 +66,29 @@ class EventController extends AbstractController
       $this->serializer->serialize($agendaEvent, 'json', ['groups' => 'event:fetch']), 
       Response::HTTP_OK);
   }
+
+
+
+  /**
+   * @Route("/api/events/{id<\d+>}", name="api/event_create", methods={"PUT"})
+   */
+  public function edit (Request $request, $id) 
+  {
+    if (!$request->isXmlHttpRequest() || !$request->isMethod('PUT')) throw new Exception("Aucune action possible à cet endroit", Response::HTTP_BAD_REQUEST);
+    
+    $agendaEvent = $this->eventRepository->find($id);
+
+    if ($agendaEvent) {
+      $eventToDispatch = new AgendaEventEditEvent($agendaEvent, $request->getContent());
+      $this->dispatcher->dispatch($eventToDispatch, AgendaEvent::EDIT_EVENT);
+    }
+    
+    if (isset($agendaEvent->errors)) return $this->json($agendaEvent->errors, Response::HTTP_BAD_REQUEST);
+    return $this->json(
+      $this->serializer->serialize($agendaEvent, 'json', ['groups' => 'event:edit']), 
+      Response::HTTP_OK);
+  }
+
 
 
   /**

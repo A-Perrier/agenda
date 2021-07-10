@@ -15,27 +15,28 @@ class Event
 {
 
     public const CREATE_EVENT = 'agenda_event.create';
+    public const EDIT_EVENT = 'agenda_event.edit';
     public const DELETE_EVENT = 'agenda_event.delete';
 
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"event:fetch"})
+     * @Groups({"event:fetch", "event:edit"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="3", minMessage="Le nom de l'évènement ne peut faire moins de {{ limit }} caractères")
-     * @Groups({"event:fetch"})
+     * @Groups({"event:fetch", "event:edit"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Vous devez indiquer une heure !")
-     * @Groups({"event:fetch"})
+     * @Groups({"event:fetch", "event:edit"})
      */
     private $time;
 
@@ -48,7 +49,7 @@ class Event
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"event:fetch"})
+     * @Groups({"event:fetch", "event:edit"})
      */
     private $date;
 

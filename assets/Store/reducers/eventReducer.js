@@ -86,6 +86,9 @@ export function manageEvents (state = initialState, action) {
       }
 
       return nextState || state
+
+
+      
     default:
       return state
       break;

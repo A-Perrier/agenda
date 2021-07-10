@@ -2,7 +2,7 @@ import Axios from 'axios';
 import { EVENT_ENDPOINT } from '../../config';
 import { debugDDResponse } from '../Debug';
 import Cache from '../Cache';
-import { dangerToast } from '../Toast';
+import { dangerToast, successToast } from '../Toast';
 import { removeFromArray } from '../../shared/utils';
 
 const cacheKey = "events"
@@ -66,8 +66,6 @@ export const create = (data) => {
         const event = await JSON.parse(data)
         const allEvents = Cache.get(`${cacheKey}`)
         allEvents.push(event)
-        //Cache.set(`${cacheKey}`, allEvents)
-        //Cache.set(`${cacheKey}/${event.date}`, event)
         return event
       }
     )
@@ -81,6 +79,32 @@ export const create = (data) => {
       }
     )
 }
+
+
+
+export const edit = (data) => {
+  return axios
+    .put(`${EVENT_ENDPOINT}/${data.id}`, data)
+    .then(
+      async ({ data }) => {
+        successToast("La modification a été prise en compte")
+        const event = await JSON.parse(data)
+        const allEvents = Cache.get(`${cacheKey}`)
+        allEvents.push(event)
+        return event
+      }
+    )
+    .catch(
+      ({ response }) => {
+        const { data } = response
+        for (const [errorField, message] of Object.entries(data)) {
+          dangerToast(message)
+        }
+        return response.data
+      }
+    )
+}
+
 
 
 export const remove = (data) => {

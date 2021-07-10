@@ -4,7 +4,6 @@ import './Agenda.scss';
 import '../bootstrap';
 import Calendar from './Calendar/Calendar';
 import Categories from './Categories/Categories';
-import { findAll } from '../services/Api/Events'
 import NextEvents from './AgendaEvents/NextEvents';
 
 import { Provider } from 'react-redux'
