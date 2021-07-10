@@ -213,6 +213,52 @@ const lastDayOfNextMonth = (monthNumber, year) => {
 }
 
 
+/**
+ * 
+ * @param {String} timeUntil must be a string (e.g. 11:30)
+ * @param {DateTime} fromWhen 
+ * @returns {Object} {days: int, hours: int, minutes: int, isPassed: bool}
+ */
+function getTimeUntil (timeUntil, fromWhen) {
+  const eventTime = new Date()
+  const hours = timeUntil.split(':')[0]
+  const minutes = timeUntil.split(':')[1]
+  eventTime.setHours(hours, minutes, 0)
+  
+  const minutesUntil = (eventTime - fromWhen) / 1000 / 60
+
+  const isPassed = eventTime < fromWhen
+
+  return {
+    ... calculateTimeFromMinutes(minutesUntil),
+    isPassed
+  }
+}
+
+
+
+function calculateTimeFromMinutes (minutes) {
+  let hours = 0
+  let days = 0
+
+  while (minutes >= 60) {
+    minutes -= 60
+    hours += 1
+  }
+
+  while (hours >= 24) {
+    hours - 24
+    day += 1
+  }
+
+  return { 
+    days: Math.round(days), 
+    hours: Math.round(hours), 
+    minutes: Math.round(minutes)
+  }
+}
+
+
 const capitalize = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -260,5 +306,6 @@ export {
   lastDayOfNextMonth,
   errorMessage,
   removeFromArray,
-  getSelected
+  getSelected,
+  getTimeUntil
 }

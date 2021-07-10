@@ -250,7 +250,7 @@
 
     &__time-until {
         display: flex;
-        width: 5rem;
+        min-width: 5rem;
         padding: .7rem .5rem;
         background-color: #E1E5FF;
         position: absolute;
