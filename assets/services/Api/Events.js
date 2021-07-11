@@ -46,7 +46,6 @@ export const findAll = async (fromCacheWanted = true) => {
     if (cachedEvents) return cachedEvents 
   }
 
-
   return axios
     .get(`${EVENT_ENDPOINT}`)
     .then(
