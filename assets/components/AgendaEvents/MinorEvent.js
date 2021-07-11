@@ -15,6 +15,10 @@ const MinorEvent = ({ event }) => {
   const randomBg = backgrounds[Math.floor(Math.random()*backgrounds.length)]
   const [timeLeft, setTimeLeft] = useState({})
 
+  const now = new Date()
+  const isTomorrow = timeLeft.days === 1 || (timeLeft.days === 0 && timeLeft.hours > now.getHours())
+  const isAfterTomorrow = timeLeft.days === 2 || (timeLeft.days === 1 && timeLeft.hours > now.getHours())
+
 
   useEffect(() => {
     const time = getTimeUntil(frFormatToDateTime(event.date, event.time, true))
@@ -23,17 +27,20 @@ const MinorEvent = ({ event }) => {
 
   
   return (
-    <div className="major-event__box" style={{backgroundImage: `url(${randomBg})`}}>
-      <div className="major-event__time-until">
+    <div className="next-event__box" style={{backgroundImage: `url(${randomBg})`}}>
+      <div className="next-event__time-until" style={{ backgroundColor: event.category.color, opacity: .8 }}>
         <Clock />
-        &nbsp; {timeLeft.days > 0 && `${timeLeft.days}j`} {timeLeft.hours > 0 && `${timeLeft.hours}h`} {timeLeft.minutes}min
+        &nbsp; {
+          isTomorrow ? 'Demain à ' : 
+          isAfterTomorrow ? 'Après-demain à ' : 
+          `Dans ${timeLeft.days} jours à `
+          } { event.time }
       </div>
-      <div className="major-event__content">
-        <span className="major-event__time">
-          { event.time }
-        </span>
-        <p className="major-event__name">
-          { event.name }
+      <div className="next-event__content minor-event">
+        <p className="next-event__name minor-event event">
+          <span className="event__category-color" style={{backgroundColor: event.category.color}}></span>
+          &nbsp;
+          {event.name}
         </p>
       </div>
     </div>

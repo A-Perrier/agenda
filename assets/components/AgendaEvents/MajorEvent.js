@@ -52,16 +52,18 @@ const MajorEvent = ({ event }) => {
   return (
     <>
     {!isPassed &&
-      <div className="major-event__box" style={{backgroundImage: `url(${randomBg})`}}>
-        <div className="major-event__time-until">
+      <div className="next-event__box" style={{backgroundImage: `url(${randomBg})`}}>
+        <div className="next-event__time-until" style={{ backgroundColor: event.category.color, opacity: .8 }}>
           <Clock />
           &nbsp; {timeLeft.hours > 0 && `${timeLeft.hours}h`} {timeLeft.minutes}min
         </div>
-        <div className="major-event__content">
-          <span className="major-event__time">
+        <div className="next-event__content">
+          <span className="next-event__time">
             { timeToShow }
           </span>
-          <p className="major-event__name">
+          <p className="next-event__name event">
+            <span className="event__category-color" style={{backgroundColor: event.category.color}}></span>
+            &nbsp;
             { event.name }
           </p>
         </div>
