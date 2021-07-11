@@ -7,9 +7,8 @@ import bg4 from '../../img/daily-event_4.jpg'
 import bg5 from '../../img/daily-event_5.jpg'
 import bg6 from '../../img/daily-event_6.jpg'
 import bg7 from '../../img/daily-event_7.jpg'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { edit } from '../../services/Api/Events';
-import { useEffect } from 'react';
 import { getTimeUntil } from '../../shared/utils';
 
 
@@ -27,7 +26,10 @@ const MajorEvent = ({ event }) => {
 
 
   useEffect(() => {
-    const time = getTimeUntil(editableEvent.time, new Date())
+    const hours = editableEvent.time.split(':')[0]
+    const minutes = editableEvent.time.split(':')[1]
+    
+    const time = getTimeUntil((new Date().setHours(hours, minutes, 0)))
     setTimeLeft(time)
     setIsPassed(time.isPassed)
   }, [timeToShow])
@@ -53,7 +55,7 @@ const MajorEvent = ({ event }) => {
       <div className="major-event__box" style={{backgroundImage: `url(${randomBg})`}}>
         <div className="major-event__time-until">
           <Clock />
-          &nbsp; {timeLeft.hours > 0 && `${timeLeft.hours} h`} {timeLeft.minutes} min
+          &nbsp; {timeLeft.hours > 0 && `${timeLeft.hours}h`} {timeLeft.minutes}min
         </div>
         <div className="major-event__content">
           <span className="major-event__time">

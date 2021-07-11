@@ -30,8 +30,8 @@ const NextEvents = ({ limit }) => {
     <section className="next-events">
       { 
         events.map(event => {
-          if (actualDate() === event.date) return <MajorEvent event={event} />
-          else return <MinorEvent event={event} />
+          if (actualDate() === event.date) return <MajorEvent event={event} key={event}/>
+          else return <MinorEvent event={event} key={event}/>
         })
       }
     </section>

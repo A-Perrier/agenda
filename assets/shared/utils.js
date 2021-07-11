@@ -214,20 +214,32 @@ const lastDayOfNextMonth = (monthNumber, year) => {
 
 
 /**
- * 
- * @param {String} timeUntil must be a string (e.g. 11:30)
- * @param {DateTime} fromWhen 
+ * Converts a french formatted date to a DateTime object
+ * @param {String} date formatted like "27-04-2021" 
+ * @param {String} time formatted like "11:30" 
+ */
+function frFormatToDateTime (date, time = null, toTimeStamp = false) {
+  const exploded = date.split('-');
+  const day = exploded[0];
+  const month = exploded[1];
+  const year = exploded[2];
+  const getTime = time ? `T${time}:00` : ''
+
+  return toTimeStamp ? 
+    new Date(`${year}-${month}-${day}${getTime}`).getTime() : 
+    new Date(`${year}-${month}-${day}${getTime}`);
+}
+
+
+/**
+ * Evaluates the duration in days, hours and minutes between two dates
+ * @param {Integer|Date} limitDate Takes timestamp or Date object
+ * @param {Integer|Date} fromWhen Takes timestamp or Date object
  * @returns {Object} {days: int, hours: int, minutes: int, isPassed: bool}
  */
-function getTimeUntil (timeUntil, fromWhen) {
-  const eventTime = new Date()
-  const hours = timeUntil.split(':')[0]
-  const minutes = timeUntil.split(':')[1]
-  eventTime.setHours(hours, minutes, 0)
-  
-  const minutesUntil = (eventTime - fromWhen) / 1000 / 60
-
-  const isPassed = eventTime < fromWhen
+function getTimeUntil (limitDate, fromWhen = new Date()) {
+  const minutesUntil = (limitDate - fromWhen) / 1000 / 60
+  const isPassed = limitDate < fromWhen
 
   return {
     ... calculateTimeFromMinutes(minutesUntil),
@@ -247,8 +259,8 @@ function calculateTimeFromMinutes (minutes) {
   }
 
   while (hours >= 24) {
-    hours - 24
-    day += 1
+    hours -= 24
+    days += 1
   }
 
   return { 
@@ -307,5 +319,6 @@ export {
   errorMessage,
   removeFromArray,
   getSelected,
-  getTimeUntil
+  getTimeUntil,
+  frFormatToDateTime
 }
