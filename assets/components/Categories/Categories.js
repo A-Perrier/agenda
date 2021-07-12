@@ -5,12 +5,15 @@ import CSS from '../../const';
 import Counter from '../Globals/Counter';
 import ColorPicker from './ColorPicker';
 import { findAll, create, remove } from '../../services/Api/Categories';
+import { findAll as findAllEvents } from '../../services/Api/Events';
 import { errorMessage, removeFromArray } from '../../shared/utils';
 import Category, { CategoryToggler } from './Category';
+import { EVENTS_FILTER } from '../../Store/Reducers/eventReducer';
+import { connect } from 'react-redux';
 
 
 
-const Categories = ({ maxCategoryLength }) => {
+const Categories = ({ maxCategoryLength, dispatch }) => {
   const [limitInputText, setLimitInputText] = useState(maxCategoryLength)
   const [categories, setCategories] = useState([])
 
@@ -79,7 +82,6 @@ const Categories = ({ maxCategoryLength }) => {
   }
 
 
-
   async function deleteCategory (category) {
     const result = confirm("Voulez-vous vraiment supprimer la catégorie et tous les événements qui y sont associés ?")
     if (!result) return
@@ -97,24 +99,40 @@ const Categories = ({ maxCategoryLength }) => {
 
 
 
-  function handleCategorySelect (category) {
+  async function handleCategorySelect (category) {
     const copy = checkedCategories.slice()
     copy.push(category)
     setCheckedCategories(copy)
+
+    const action = { type: EVENTS_FILTER, value: { categories: copy, events: await findAllEvents() } }
+    dispatch(action)
   }
 
-  
 
-  function handleCategoryUnselect (category) {
+
+  async function handleCategoryUnselect (category) {
     const copy = removeFromArray(checkedCategories, category)
     setCheckedCategories(copy)
+
+    const action = { type: EVENTS_FILTER, value: { categories: copy, events: await findAllEvents() } }
+    dispatch(action)
   }
 
 
-  const handleCategoryTogglerSelect = () => setCheckedCategories(categories)
+  async function handleCategoryTogglerSelect () {
+    setCheckedCategories(categories)
+
+    const action = { type: EVENTS_FILTER, value: { categories, events: await findAllEvents() } }
+    dispatch(action)
+  }
 
 
-  const handleCategoryTogglerUnselect = () => setCheckedCategories([])
+  function handleCategoryTogglerUnselect () {
+    setCheckedCategories([])
+
+    const action = { type: EVENTS_FILTER, value: { categories: [], events: [] } }
+    dispatch(action)
+  }
   
 
   return ( 
@@ -160,4 +178,5 @@ const Categories = ({ maxCategoryLength }) => {
   )
 }
  
-export default Categories;
+
+export default connect()(Categories);

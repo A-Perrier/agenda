@@ -33,6 +33,12 @@ export const EVENTS_EDIT = 'EVENTS_EDIT'
  */
 export const EVENTS_REMOVE = 'EVENTS_REMOVE'
 
+
+/**
+ * Event reducer action type
+ */
+export const EVENTS_FILTER = 'EVENTS_FILTER'
+
 export function manageEvents (state = initialState, action) {
   let nextState
   let eventsCopy
@@ -88,7 +94,7 @@ export function manageEvents (state = initialState, action) {
       eventsCopy = state.events.slice()
       let eventIndex = eventsCopy.indexOf(prevEvent)
       eventsCopy.splice(eventIndex, 1, eventModified)
-      
+
       nextState = {
         ... state, 
         events: eventsCopy
@@ -112,6 +118,29 @@ export function manageEvents (state = initialState, action) {
 
 
       
+    case EVENTS_FILTER: 
+      // Filtre juste dans la suppression, on doit repartir des events complets à chaque fois
+      let { categories, events } = action.value
+      
+      eventsCopy = events.slice()
+      eventsCopy = eventsCopy.filter(event => {
+        let count = 0
+        categories.map(category => {
+          if (category.name === event.category.name) count += 1
+        })
+        return count > 0
+      })
+
+      nextState = {
+        ... state, 
+        events: eventsCopy
+      } 
+
+      return nextState || state
+      break;
+
+
+
     default:
       return state
       break;

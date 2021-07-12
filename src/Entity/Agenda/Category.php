@@ -21,7 +21,7 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"category:fetch"})
+     * @Groups({"category:fetch", "event:fetch"})
      */
     private $id;
 
