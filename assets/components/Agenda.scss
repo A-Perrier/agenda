@@ -252,12 +252,12 @@
         display: flex;
         min-width: 5rem;
         padding: .7rem .5rem;
-        background-color: #E1E5FF;
         position: absolute;
         top: 0;
         right: 1.5rem;
         transform: translateY(-50%);
         border-radius: 10px;
+        color: white;
     }
 
     &__content {
@@ -304,7 +304,7 @@
 }
 
 
-@media only screen and (min-width: $desktop-breakpoint) 
+@media only screen and (min-width: $tablet-breakpoint) 
 {
     .calendar .day .drops { left: 61%; }
 }

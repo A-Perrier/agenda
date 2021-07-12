@@ -6,6 +6,7 @@ import { edit } from '../../services/Api/Events'
 const Event = ({ 
   data, 
   onDelete,
+  onEditClick,
   onEdit,
   categories
 }) => {
@@ -54,7 +55,7 @@ const Event = ({
       {data.name}
       &nbsp;
       <Bin onClick={() => onDelete(data)} />
-      <EditIcon onClick={() => setIsEditing(!isEditing)} />
+      <EditIcon onClick={() => { setIsEditing(!isEditing); onEditClick() }} />
     </p>
     { 
       isEditing &&

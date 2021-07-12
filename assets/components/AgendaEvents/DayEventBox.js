@@ -166,6 +166,7 @@ const DayEventBox = ({
               key={event} 
               data={event} 
               onDelete={deleteEvent} 
+              onEditClick={() => setIsCreationActive(false)}
               onEdit={(eventModified, prevEvent) => onEdit(eventModified, prevEvent)} 
               categories={categories} 
               />
