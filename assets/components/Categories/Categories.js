@@ -23,7 +23,7 @@ const Categories = ({ maxCategoryLength }) => {
 
   const [checkedCategories, setCheckedCategories] = useState([])
 
-  const fetchCategories = async () => {
+  async function fetchCategories () {
     const categories = await findAll()
     setCategories(categories)
     setCheckedCategories(categories)
@@ -38,7 +38,8 @@ const Categories = ({ maxCategoryLength }) => {
   const onNewCategoryInteraction = () => setIsInputActive(!isInputActive)
 
 
-  const handleInputChange = ({ currentTarget }) => {
+
+  function handleInputChange ({ currentTarget }) {
     const category = currentTarget.value
 
     // Prévient du dépassement de la limite avec un CTRL+V
@@ -54,7 +55,8 @@ const Categories = ({ maxCategoryLength }) => {
   }
 
 
-  const addCategory = async (event) => {
+
+  async function addCategory (event) {
     if (newCategory === '') {
       setShowInputError(true)
       return
@@ -76,7 +78,9 @@ const Categories = ({ maxCategoryLength }) => {
     setNewCategory('')
   }
 
-  const deleteCategory = async (category) => {
+
+
+  async function deleteCategory (category) {
     const result = confirm("Voulez-vous vraiment supprimer la catégorie et tous les événements qui y sont associés ?")
     if (!result) return
 
@@ -91,14 +95,17 @@ const Categories = ({ maxCategoryLength }) => {
     }
   }
 
-  const handleCategorySelect = (category) => {
+
+
+  function handleCategorySelect (category) {
     const copy = checkedCategories.slice()
     copy.push(category)
     setCheckedCategories(copy)
   }
 
+  
 
-  const handleCategoryUnselect = (category) => {
+  function handleCategoryUnselect (category) {
     const copy = removeFromArray(checkedCategories, category)
     setCheckedCategories(copy)
   }
