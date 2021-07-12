@@ -8,3 +8,9 @@ React 16.8.6
 Symfony 5.3.0
 
 ## Fonctionnalités
+- [x] Navigation dans le calendrier
+- [x] Insertion d'événements sur des dates spécifiques
+- [x] Consultation des événements
+- [x] Rappel des prochains événements
+- [x] Séparation des événements par catégorie
+- [x] Filtrage des événements par catégorie

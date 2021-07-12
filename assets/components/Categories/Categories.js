@@ -94,6 +94,9 @@ const Categories = ({ maxCategoryLength, dispatch }) => {
       
       const checkedCategoriesFiltered = removeFromArray(checkedCategories, category)
       setCheckedCategories(checkedCategoriesFiltered)
+
+      const action = { type: EVENTS_FILTER, value: { categories: checkedCategoriesFiltered, events: await findAllEvents() } }
+      dispatch(action)
     }
   }
 

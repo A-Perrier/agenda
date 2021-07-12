@@ -40,7 +40,7 @@ const DayEventBox = ({
     fetchCategories()
   }, [])
   
-
+  console.log(categories)
 
   function onEventInteraction (event = null) {
     if (!event.id) {
@@ -135,9 +135,13 @@ const DayEventBox = ({
           </h1>
           {
             !isCreationActive ?
+            categories.length > 0 &&
             <p>
               Créer un évènement
               <PlusIcon onClick={onEventInteraction} />
+            </p> ||
+            <p>
+              Vous devez avoir au moins une catégorie pour créer un événement
             </p> :
             <form className="day-event-box__create-form" onSubmit={addAgendaEvent}>
               <input type="time" min="00:00" max="23:00" step="300" value={eventTime} onChange={handleEventTime} />
