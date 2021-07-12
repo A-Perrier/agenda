@@ -26,6 +26,11 @@ export const EVENTS_CREATE = 'EVENTS_CREATE'
 /**
  * Event reducer action type
  */
+export const EVENTS_EDIT = 'EVENTS_EDIT'
+
+/**
+ * Event reducer action type
+ */
 export const EVENTS_REMOVE = 'EVENTS_REMOVE'
 
 export function manageEvents (state = initialState, action) {
@@ -74,6 +79,23 @@ export function manageEvents (state = initialState, action) {
       }
 
       return nextState || state
+      break;
+
+
+    
+    case EVENTS_EDIT: 
+      let { eventModified, prevEvent } = action.value
+      eventsCopy = state.events.slice()
+      let eventIndex = eventsCopy.indexOf(prevEvent)
+      eventsCopy.splice(eventIndex, 1, eventModified)
+      
+      nextState = {
+        ... state, 
+        events: eventsCopy
+      }
+
+      return nextState || state
+      break;
 
 
 
@@ -86,6 +108,7 @@ export function manageEvents (state = initialState, action) {
       }
 
       return nextState || state
+      break;
 
 
       

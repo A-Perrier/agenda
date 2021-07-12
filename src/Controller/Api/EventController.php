@@ -93,7 +93,6 @@ class EventController extends AbstractController
   public function edit (Request $request, $id) 
   {
     if (!$request->isXmlHttpRequest() || !$request->isMethod('PUT')) throw new Exception("Aucune action possible à cet endroit", Response::HTTP_BAD_REQUEST);
-    
     $agendaEvent = $this->eventRepository->find($id);
 
     if ($agendaEvent) {
@@ -103,7 +102,7 @@ class EventController extends AbstractController
     
     if (isset($agendaEvent->errors)) return $this->json($agendaEvent->errors, Response::HTTP_BAD_REQUEST);
     return $this->json(
-      $this->serializer->serialize($agendaEvent, 'json', ['groups' => 'event:edit']), 
+      $this->serializer->serialize($agendaEvent, 'json', ['groups' => 'event:fetch']), 
       Response::HTTP_OK);
   }
 

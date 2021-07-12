@@ -88,8 +88,8 @@ export const edit = (data) => {
       async ({ data }) => {
         successToast("La modification a été prise en compte")
         const event = await JSON.parse(data)
-        const allEvents = Cache.get(`${cacheKey}`)
-        allEvents.push(event)
+        Cache.clear(`${cacheKey}`)
+        Cache.get(`${cacheKey}`)
         return event
       }
     )

@@ -77,11 +77,14 @@ const Day = ({
   }, [events])
 
 
+
   function makeSelection (el) {
     const selected = document.querySelector('.day.selected')
     if (selected) selected.classList.remove('selected')
     el.classList.add('selected')
   }
+
+
 
   function handleClick (e) {
     makeSelection(e.currentTarget)
@@ -95,13 +98,22 @@ const Day = ({
     }
   }
 
-  function onEventCreate (eventColor) {
+
+
+  function onEventCreate (eventColor, eventIndex = null) {
     const copy = dropColors.slice()
+    if (eventIndex) {
+      dropColors.splice(eventIndex, 1, eventColor)
+      return
+    }
+    
     if (!copy.includes(eventColor)) {
       copy.push(eventColor)
       setDropColors(copy)
     }
   }
+
+
 
   function afterEventDeleted (events) {
     setCurrentDateEvents(events)
@@ -111,11 +123,15 @@ const Day = ({
     })
   }
   
+
+
   function removeBox () {
     setDivInfo('')
     const boxOpened = document.querySelector('.day.selected.event-box-opened')
     if (boxOpened) boxOpened.classList.remove('event-box-opened')
   }
+
+
 
   return (
     <>
@@ -130,7 +146,16 @@ const Day = ({
       </div>
     </div>
     { divInfo === daySelected && 
-      <DayEventBox removeBox={removeBox} key={numericDate} fullDate={fullDate} numericDate={numericDate} YPos={YPos} onEventCreate={onEventCreate} events={currentDateEvents} afterEventDeleted={afterEventDeleted}/>
+      <DayEventBox 
+        removeBox={removeBox} 
+        key={numericDate} 
+        fullDate={fullDate} 
+        numericDate={numericDate} 
+        YPos={YPos} 
+        onEventCreate={onEventCreate} 
+        events={currentDateEvents} 
+        afterEventDeleted={afterEventDeleted}
+      />
       }
     </>
    );

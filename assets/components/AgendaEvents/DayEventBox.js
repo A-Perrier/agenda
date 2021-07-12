@@ -8,7 +8,7 @@ import Event from './Event';
 import { removeFromArray } from '../../shared/utils';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { connect } from 'react-redux';
-import { EVENTS_CREATE, EVENTS_REFRESH, EVENTS_REMOVE } from '../../Store/Reducers/eventReducer';
+import { EVENTS_CREATE, EVENTS_EDIT, EVENTS_REFRESH, EVENTS_REMOVE } from '../../Store/Reducers/eventReducer';
 
 const DayEventBox = ({ 
   fullDate, 
@@ -42,8 +42,12 @@ const DayEventBox = ({
   
 
 
-  function onNewEventInteraction () {
-    setIsCreationActive(true)
+  function onEventInteraction (event = null) {
+    if (!event.id) {
+      setIsCreationActive(true)
+    } else {
+      console.log(event.id)
+    }
   }
 
 
@@ -88,9 +92,21 @@ const DayEventBox = ({
     copy.push(agendaEvent)
     setDateEvents(copy)
     onEventCreate(agendaEvent.category.color)
-
     
     let action = { type: EVENTS_CREATE, value: agendaEvent }
+    dispatch(action)
+  }
+
+
+
+  function onEdit (eventModified, prevEvent) {
+    let copy = dateEvents.slice()
+    const eventIndex = copy.indexOf(prevEvent)
+    copy.splice(eventIndex, 1, eventModified)
+    setDateEvents(copy)
+    onEventCreate(eventModified.category.color, eventIndex)
+    
+    let action = { type: EVENTS_EDIT, value: { eventModified, prevEvent } }
     dispatch(action)
   }
 
@@ -121,7 +137,7 @@ const DayEventBox = ({
             !isCreationActive ?
             <p>
               Créer un évènement
-              <PlusIcon onClick={onNewEventInteraction} />
+              <PlusIcon onClick={onEventInteraction} />
             </p> :
             <form className="day-event-box__create-form" onSubmit={addAgendaEvent}>
               <input type="time" min="00:00" max="23:00" step="300" value={eventTime} onChange={handleEventTime} />
@@ -146,7 +162,13 @@ const DayEventBox = ({
           {
             dateEvents.length > 0 ?
             dateEvents.map(event => 
-              <Event key={event} data={event} onDelete={deleteEvent}/>
+              <Event 
+              key={event} 
+              data={event} 
+              onDelete={deleteEvent} 
+              onEdit={(eventModified, prevEvent) => onEdit(eventModified, prevEvent)} 
+              categories={categories} 
+              />
             ) :
             <p>Il n'y a pas encore d'évènement</p>
           }
