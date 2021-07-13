@@ -28,6 +28,7 @@ const NextEvents = ({ limit }) => {
 
   return ( 
     <section className="next-events">
+      <h1>Dans les { limit } prochains jours</h1>
       { 
         events.map(event => {
           if (actualDate() === event.date) return <MajorEvent event={event} key={event}/>

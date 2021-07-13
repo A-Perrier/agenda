@@ -51,6 +51,7 @@ export const remove = (data) => {
     .delete(`${CATEGORY_ENDPOINT}/${data.id}`)
     .then(
       async (response) => {
+        Cache.clear(cacheKey)
         const status = await response.data
         return status
       }

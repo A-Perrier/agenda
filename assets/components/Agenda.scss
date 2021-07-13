@@ -6,7 +6,6 @@
 }
 
 .calendar {
-
     header {
         display: flex;
         justify-content: space-between;
@@ -152,7 +151,7 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
-    width: 90vw;
+    width: 90%;
     background-color: white;
     border: 1px solid hsl(213, 49%, 31%, .5);
     padding: 1rem;
@@ -312,4 +311,10 @@
 @media only screen and (min-width: $tablet-breakpoint) 
 {
     .calendar .day .drops { left: 61%; }
+}
+
+@media screen and (min-width: $tablet-breakpoint) 
+{
+  .agenda-container { width: 50%; }
+  .day-event-box { width: 50% }
 }

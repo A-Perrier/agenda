@@ -20,6 +20,7 @@
       position: relative;
       width: fit-content;
       margin: auto;
+      margin-bottom: 1rem;
     }
 
     & .btn-submit {
@@ -60,8 +61,8 @@
   .categories-container {
 
     .categories {
-        width: 50%;
-        margin-right: auto;
+        //width: 50%;
+        //margin-right: auto;
       
       &__form { margin: inherit; }
 
